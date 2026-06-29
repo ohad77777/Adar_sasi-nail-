@@ -1,0 +1,27 @@
+{
+  "name": "Adar Sasi Nail",
+  "short_name": "Adar Nail",
+  "description": "קביעת תורים לציפורניים",
+  "start_url": "/Adar_sasi-nail-/index.html",
+  "scope": "/Adar_sasi-nail-/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#0a0a0a",
+  "orientation": "portrait",
+  "lang": "he",
+  "dir": "rtl",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
