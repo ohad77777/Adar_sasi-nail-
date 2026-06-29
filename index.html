@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Adar Sasi Nail</title>
+<meta name="theme-color" content="#000">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=Cormorant+Garamond:wght@300;400;500;600;700&family=Frank+Ruhl+Libre:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+<style>
+:root{--bk:#0a0a0a;--wh:#fff;--g50:#fafafa;--g100:#f4f4f4;--g200:#e8e8e8;--g300:#d4d4d4;--g400:#a8a8a8;--g500:#777;--g600:#555;--g700:#3a3a3a;--g800:#252525;--g900:#181818;--gd:#C9A96E;--gl:#E8D5B0;--gk:#A8864A;--dn:#ef4444;--ok:#22c55e;--or:#FF9800;--he:'Frank Ruhl Libre','Heebo',serif;--en:'Cormorant Garamond',serif;--f:'Heebo',sans-serif;--r:14px;--rs:10px;--s1:0 1px 6px rgba(0,0,0,.03);--s2:0 4px 16px rgba(0,0,0,.05);--hd:50px;--nv:70px}
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:var(--f);background:var(--wh);color:var(--g700);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased;font-size:12px;line-height:1.5}::-webkit-scrollbar{width:0}h1,h2,h3{font-family:var(--he);font-weight:700;color:var(--bk)}.en{font-family:var(--en);letter-spacing:2px}
+#sp{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;background:var(--bk);transition:opacity .7s,visibility .7s}#sp.h{opacity:0;visibility:hidden;pointer-events:none}
+.sp{text-align:center;animation:fU .8s ease}.sp .bsd{position:fixed;top:10px;right:14px;font-family:var(--he);font-size:10px;color:var(--gd)}
+.sp-l{width:80px;height:80px;border-radius:50%;border:1.5px solid var(--gd);margin:0 auto 16px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--g900)}.sp-l img{width:100%;height:100%;object-fit:cover}.sp-l i{font-size:28px;color:var(--gd)}
+.sp-n{font-family:var(--en);font-size:24px;color:var(--wh);font-weight:500;letter-spacing:3px}.sp-s{font-family:var(--en);font-size:8px;color:var(--gd);letter-spacing:7px;text-transform:uppercase;margin-top:5px}
+.sp-b{width:50px;height:1px;background:var(--g800);margin:24px auto 0;overflow:hidden}.sp-b div{width:0;height:100%;background:var(--gd);animation:lB 1.8s ease forwards}
+@keyframes lB{to{width:100%}}
+#au{position:fixed;inset:0;display:none;z-index:9998;overflow:hidden}#au.sh{display:block}
+.au-bg{position:absolute;inset:0;background:linear-gradient(155deg,var(--bk) 0%,var(--bk) 48%,var(--gd) 48%,var(--gd) 48.3%,#FDFBF7 48.3%)}
+.au-bsd{position:fixed;top:10px;right:14px;font-family:var(--he);font-size:10px;color:var(--gd);z-index:10}
+.au-w{position:relative;z-index:1;width:100%;height:100%;display:flex;align-items:center;justify-content:center;padding:14px}
+.au-c{width:100%;max-width:320px;animation:fU .6s ease}
+.au-top{text-align:center;padding:15px 20px 22px;position:relative;z-index:10;background:linear-gradient(180deg,rgba(10,10,10,.95) 0%,rgba(10,10,10,.85) 80%,transparent 100%);border-radius:0 0 20px 20px;margin:-10px -10px 0 -10px}
+.au-lg{width:58px;height:58px;border-radius:50%;border:2px solid var(--gd);margin:0 auto 10px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--bk)}.au-lg img{width:100%;height:100%;object-fit:cover}.au-lg i{font-size:18px;color:var(--gd)}
+.au-br{font-family:var(--en);font-size:20px;color:var(--gd);font-weight:600;letter-spacing:3px}
+.au-sb{font-family:var(--en);font-size:9px;color:var(--gl);letter-spacing:5px;text-transform:uppercase;margin-top:4px}
+.au-f{background:var(--wh);border-radius:var(--r);padding:18px 14px 14px;box-shadow:0 -4px 16px rgba(0,0,0,.03);position:relative}
+.au-f::before{content:'';position:absolute;top:-1px;left:14px;right:14px;height:2px;background:linear-gradient(90deg,var(--gl),var(--gd),var(--gl));border-radius:0 0 2px 2px}
+.au-fh{text-align:center;margin-bottom:12px}.au-em{font-size:24px;margin-bottom:3px}.au-fh h2{font-size:16px;margin-bottom:1px;color:var(--gd)}.au-fh p{font-size:10px;color:var(--gk)}
+.au-fi{display:flex;align-items:center;background:#FAFAF8;border:1.5px solid var(--gl);border-radius:var(--rs);padding:0 10px;margin-bottom:8px;transition:all .3s}
+.au-fi:focus-within{border-color:var(--gd);background:var(--wh)}
+.au-fi i{color:var(--gd);font-size:11px;margin-left:8px}.au-fi:focus-within i{color:var(--gk)}
+.au-fi input{flex:1;background:transparent;border:none;color:var(--gk);font-family:var(--f);font-size:12px;padding:10px 0;outline:none;font-weight:500}.au-fi input::placeholder{color:var(--gd)}
+.au-btn{width:100%;border:none;border-radius:var(--rs);padding:11px;font-family:var(--f);font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;background:linear-gradient(135deg,var(--gd),var(--gk));color:var(--wh);margin-top:4px;transition:all .3s}
+.btn{border:none;border-radius:var(--rs);padding:10px 14px;font-family:var(--f);font-size:11px;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .3s;width:100%}
+.btn-gd{background:linear-gradient(135deg,var(--gd),var(--gk));color:var(--wh)}.btn-bk{background:var(--bk);color:var(--wh)}.btn-ol{background:transparent;color:var(--gd);border:1.5px solid var(--gd);border-radius:20px}.btn-wh{background:var(--wh);color:var(--bk);border:1.5px solid var(--g200)}.btn-dn{background:var(--dn);color:var(--wh)}.btn-sm{padding:7px 10px;font-size:9px;width:auto}
+.bi{background:none;border:none;color:var(--g400);font-size:13px;padding:5px;cursor:pointer;border-radius:50%;width:26px;height:26px;display:flex;align-items:center;justify-content:center;transition:all .3s}.bi:hover{background:var(--g100);color:var(--bk)}
+.bk{background:none;border:none;color:var(--g400);font-family:var(--f);font-size:10px;cursor:pointer;display:flex;align-items:center;gap:3px;margin-top:8px;justify-content:center}
+.hdr{position:fixed;top:0;left:0;right:0;height:var(--hd);background:var(--bk);z-index:1000;display:flex;align-items:center}
+.hdr-in{width:100%;max-width:420px;margin:0 auto;padding:0 10px;display:flex;align-items:center;justify-content:space-between}
+.hdr-l{display:flex;align-items:center;gap:6px}
+.hdr-lg{width:24px;height:24px;border-radius:50%;border:1px solid var(--gd);display:flex;align-items:center;justify-content:center;overflow:hidden}.hdr-lg img{width:100%;height:100%;object-fit:cover}.hdr-lg i{color:var(--gd);font-size:9px}
+.hdr-nm{font-family:var(--en);font-size:11px;color:var(--wh);font-weight:500;letter-spacing:1.5px}
+.hdr-r{display:flex;gap:1px}.hdr-r .bi{color:var(--g400);font-size:12px;width:24px;height:24px}
+.ndot{position:absolute;top:3px;right:3px;width:5px;height:5px;border-radius:50%;background:var(--dn);display:none}
+.nv{position:fixed;bottom:0;left:0;right:0;height:var(--nv);background:var(--wh);border-top:1px solid var(--g200);display:flex;align-items:center;justify-content:space-around;z-index:1000;padding:6px 4px;padding-bottom:calc(6px + env(safe-area-inset-bottom))}
+.nb{display:flex;flex-direction:column;align-items:center;gap:3px;background:none;border:none;color:var(--g400);font-family:var(--f);font-size:9px;padding:6px 10px;cursor:pointer;transition:all .3s;position:relative;border-radius:10px;min-width:55px}
+.nb i{font-size:18px}.nb.on{color:var(--bk);font-weight:600;background:var(--g50)}
+.nb.on::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:24px;height:2.5px;background:var(--gd);border-radius:0 0 3px 3px}
+.bd{padding-top:var(--hd);padding-bottom:calc(var(--nv)+25px);max-width:420px;margin:0 auto}
+.pg{display:none;animation:fI .2s ease}.pg.on{display:block}
+.pg-t{font-size:18px;font-weight:800;padding:12px 12px 1px}.pg-s{font-size:10px;color:var(--g500);padding:0 12px 10px}
+.hero{position:relative;height:230px;background:var(--bk);overflow:hidden;display:flex;align-items:center;justify-content:center}
+.hero-gw{position:absolute;inset:0;background:radial-gradient(circle at 50% 30%,rgba(201,169,110,.09),transparent 60%)}
+.hero-in{position:relative;text-align:center;z-index:1;animation:fU .6s ease}
+.hero-lg{width:56px;height:56px;border-radius:50%;border:1.5px solid var(--gd);margin:0 auto 8px;display:flex;align-items:center;justify-content:center;overflow:hidden}.hero-lg img{width:100%;height:100%;object-fit:cover}.hero-lg i{font-size:20px;color:var(--gd)}
+.hero h1{font-family:var(--en);font-size:22px;color:var(--wh);font-weight:500;letter-spacing:3px}.hero p{font-family:var(--en);font-size:8px;color:var(--gd);letter-spacing:6px;text-transform:uppercase;margin:3px 0 14px}
+.sec{padding:16px 12px}.sec-t{font-size:14px;font-weight:700;margin-bottom:3px}.sec-ln{width:22px;height:2px;background:var(--gd);border-radius:2px;margin-bottom:8px}
+.svc-sc{display:flex;gap:7px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:1px 0}
+.svc-cd{flex-shrink:0;width:130px;background:var(--wh);border-radius:var(--r);overflow:hidden;border:1px solid var(--g100);cursor:pointer;transition:transform .3s}.svc-cd:hover{transform:translateY(-2px);box-shadow:var(--s2)}
+.svc-cd-im{height:75px;background:var(--g50);display:flex;align-items:center;justify-content:center;overflow:hidden}.svc-cd-im img{width:100%;height:100%;object-fit:cover}.svc-cd-im i{font-size:20px;color:var(--g300)}
+.svc-cd-if{padding:7px}.svc-cd-if .n{font-weight:600;font-size:10px;margin-bottom:1px}.svc-cd-if .m{font-size:8px;color:var(--g500);display:flex;justify-content:space-between}.svc-cd-if .p{color:var(--gk);font-weight:700}
+.mp{background:var(--wh);border-radius:var(--r);padding:12px;border:1px solid var(--g100);margin-bottom:8px}.mn{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:8px}.ml{font-size:12px;font-weight:700;min-width:100px;text-align:center}
+.mg{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}.mh{text-align:center;font-size:8px;font-weight:600;color:var(--gd);padding:3px 0}
+.mc{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:50%;font-size:11px;font-weight:500;cursor:pointer;transition:all .2s;position:relative;font-family:var(--he)}.mc:hover{background:var(--g50)}.mc.av{font-weight:700;color:var(--bk)}.mc.av::after{content:'';position:absolute;bottom:1px;width:3px;height:3px;border-radius:50%;background:var(--gd)}.mc.off{color:var(--g300);cursor:pointer}.mc.sel{background:var(--bk);color:var(--wh)}.mc.sel::after{background:var(--gl)}.mc.td{border:1.5px solid var(--gd);font-weight:700}.mc.emp{cursor:default}
+.tb{background:var(--wh);border-radius:var(--r);padding:12px;border:1px solid var(--g100);margin-bottom:8px}.tb h4{font-size:10px;font-weight:600;color:var(--g600);margin-bottom:6px}
+.tgr{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}.ts{padding:8px 2px;border:1.5px solid var(--g200);border-radius:var(--rs);text-align:center;font-size:11px;font-weight:500;cursor:pointer;transition:all .2s}.ts:hover{border-color:var(--gd)}.ts.sel{background:var(--bk);border-color:var(--bk);color:var(--wh)}.ts.off{background:var(--g50);color:var(--g300);border-color:transparent;cursor:default}
+.cf{background:var(--wh);border-radius:var(--r);padding:12px;border:1px solid var(--g100);margin-bottom:8px}.cr{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--g100)}.cr:last-of-type{border-bottom:none}.cr i{width:12px;text-align:center;color:var(--gk);font-size:10px}.cr label{font-size:8px;color:var(--g500);display:block}.cr span{font-size:12px;font-weight:600}
+.cf-extras{background:var(--g50);border-radius:var(--r);padding:12px;margin-bottom:8px;border:1px solid var(--g100)}
+.cf-extras h4{font-size:11px;font-weight:600;margin-bottom:8px;color:var(--g700)}
+.cf-chk{display:flex;align-items:center;gap:8px;padding:8px;background:var(--wh);border-radius:var(--rs);margin-bottom:6px;cursor:pointer;border:1px solid var(--g200);transition:all .3s}
+.cf-chk:hover{border-color:var(--gd)}
+.cf-chk input{width:16px;height:16px;accent-color:var(--gd);cursor:pointer}
+.cf-chk-info{flex:1}
+.cf-chk-info .n{font-size:11px;font-weight:600}
+.cf-chk-info .d{font-size:9px;color:var(--g500)}
+.ext-count{display:none;margin-top:6px;padding:8px;background:var(--wh);border-radius:var(--rs);border:1px solid var(--g200)}
+.ext-count.show{display:block}
+.ext-count label{font-size:9px;color:var(--g600);display:block;margin-bottom:4px}
+.ext-count input{width:60px;padding:6px;border:1.5px solid var(--g200);border-radius:6px;font-size:12px;text-align:center;font-family:var(--f)}
+.succ{text-align:center;padding:20px 0}.succ .ic{font-size:42px;color:var(--ok);margin-bottom:10px;animation:pop .5s ease}@keyframes pop{0%{transform:scale(0)}50%{transform:scale(1.2)}100%{transform:scale(1)}}.succ h2{font-size:16px;margin-bottom:3px}.succ p{color:var(--g500);margin-bottom:10px;font-size:11px}
+.wb{background:#FEF3C7;border:1.5px solid var(--gl);border-radius:var(--r);padding:10px;text-align:center;margin-bottom:10px}.wb i{font-size:18px;color:var(--gd);margin-bottom:4px}.wb h3{font-size:12px;font-weight:700;color:var(--gk);margin-bottom:1px}.wb p{font-size:10px;color:var(--g600)}
+.wl-box{background:linear-gradient(135deg,#FFF8E7,#FFF3D6);border:1.5px solid var(--gl);border-radius:var(--r);padding:14px;margin:12px;text-align:center}
+.wl-box i{font-size:28px;color:var(--gd);margin-bottom:8px}
+.wl-box h3{font-size:14px;font-weight:700;color:var(--gk);margin-bottom:4px}
+.wl-box p{font-size:10px;color:var(--g600);margin-bottom:12px}
+.wl-item{background:var(--wh);border-radius:var(--r);padding:10px;margin:0 12px 5px;border:1px solid var(--g100);border-right:3px solid var(--or)}
+.wl-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+.wl-sv{font-weight:600;font-size:11px}
+.wl-info{font-size:9px;color:var(--g500)}
+.tabs{display:flex;background:var(--g50);border:1px solid var(--g100);border-radius:var(--rs);padding:2px;margin:0 12px 10px}
+.tab{flex:1;padding:7px;border:none;background:transparent;font-family:var(--f);font-size:10px;font-weight:500;color:var(--g500);border-radius:7px;cursor:pointer;transition:all .3s}
+.tab.on{background:var(--wh);color:var(--bk);box-shadow:var(--s1)}
+.ma{background:var(--wh);border-radius:var(--r);padding:10px;margin:0 12px 5px;border:1px solid var(--g100);border-right:3px solid var(--gd);cursor:pointer;transition:all .3s}
+.ma:hover{transform:translateX(-2px);box-shadow:var(--s2)}
+.ma.cn{opacity:.4;border-right-color:var(--dn)}
+.ma.pn{border-right-color:var(--gl)}
+.ma-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+.ma-sv{font-weight:600;font-size:11px}
+.ma-mt{font-size:9px;color:var(--g500);display:flex;gap:10px}
+.ma-mt i{margin-left:3px}
+.bg{display:inline-block;padding:2px 6px;border-radius:10px;font-size:7px;font-weight:500}
+.bg-ok{background:#dcfce7;color:#166534}
+.bg-no{background:#fef2f2;color:#991b1b}
+.bg-wt{background:#FEF3C7;color:#92400E}
+.gg{display:grid;grid-template-columns:1fr 1fr;gap:5px;padding:0 12px}
+.gi{border-radius:var(--r);overflow:hidden;aspect-ratio:1;position:relative;cursor:pointer}
+.gi img{width:100%;height:100%;object-fit:cover;transition:transform .3s}
+.gi:hover img{transform:scale(1.03)}
+.gi .cap{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,.7));color:#fff;padding:6px;font-size:9px}
+.fg{margin-bottom:8px}
+.fg label{display:block;font-size:9px;font-weight:500;color:var(--g600);margin-bottom:2px}
+.fi{width:100%;padding:9px 10px;border:1.5px solid var(--g200);border-radius:var(--rs);font-family:var(--f);font-size:11px;outline:none;transition:border-color .3s;background:var(--wh);color:var(--g800)}
+.fi:focus{border-color:var(--bk)}
+.md{position:fixed;inset:0;z-index:5000;display:none;align-items:flex-end;justify-content:center}
+.md.sh{display:flex}
+.md-bg{position:absolute;inset:0;background:rgba(0,0,0,.45);animation:fI .15s;backdrop-filter:blur(2px)}
+.md-bx{position:relative;background:var(--wh);border-radius:var(--r) var(--r) 0 0;width:100%;max-width:380px;max-height:80vh;overflow-y:auto;animation:sU .25s ease}
+.md-tp{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-bottom:1px solid var(--g100);position:sticky;top:0;background:var(--wh);z-index:1}
+.md-tp h3{font-size:12px;font-weight:700}
+.md-bd{padding:12px}
+.md-ft{padding:8px 12px;border-top:1px solid var(--g100);display:flex;gap:5px;justify-content:flex-end;position:sticky;bottom:0;background:var(--wh)}
+.dt{display:flex;align-items:center;gap:7px;padding:7px 0;border-bottom:1px solid var(--g100)}.dt:last-child{border-bottom:none}.dt i{width:12px;text-align:center;color:var(--gk);font-size:10px}.dt .dl{font-size:9px;color:var(--g500);min-width:40px}.dt .dv{font-weight:600;font-size:11px}
+.ni{background:var(--wh);border-radius:var(--r);padding:10px;border:1px solid var(--g100);border-right:3px solid var(--gd);margin-bottom:5px}
+.ni .nm{font-size:10px;white-space:pre-line;line-height:1.4;color:var(--g700)}
+.ni .nt{font-size:8px;color:var(--g400);margin-top:3px}
+.lb{position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:6000;display:none;flex-direction:column;align-items:center;justify-content:center;padding:14px}
+.lb.sh{display:flex}
+.lb-x{position:absolute;top:10px;left:10px;background:none;border:none;color:var(--wh);font-size:18px;cursor:pointer}
+.lb img{max-width:100%;max-height:68vh;border-radius:var(--r)}
+.lb p{color:var(--wh);margin-top:10px;font-size:11px;text-align:center}
+.toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:var(--bk);color:var(--wh);padding:8px 14px;border-radius:18px;display:none;align-items:center;gap:5px;font-size:10px;z-index:9000;box-shadow:var(--s2)}
+.toast.sh{display:flex;animation:fU .25s ease}
+.toast i{color:var(--ok)}
+.emp{text-align:center;padding:22px 8px;color:var(--g400)}
+.emp i{font-size:22px;margin-bottom:5px;display:block}
+.emp p{font-size:10px}
+.time-range{display:flex;gap:8px;align-items:center;justify-content:center;margin:10px 0}
+.time-range select{padding:8px 12px;border:1.5px solid var(--g200);border-radius:var(--rs);font-family:var(--f);font-size:11px;background:var(--wh)}
+.time-range span{color:var(--g500);font-size:10px}
+.soc-row{display:flex;justify-content:center;gap:14px;margin-top:14px}
+.soc-circle{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;transition:all .3s;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.soc-circle:hover{transform:translateY(-2px)}
+.soc-circle i{font-size:20px;color:#fff}
+.soc-circle.fb{background:#5B8BD4}.soc-circle.tt{background:#555}.soc-circle.ig{background:#E1577A}.soc-circle.wa{background:#8BC34A}
+.bsv{background:var(--wh);border-radius:var(--r);padding:12px;display:flex;align-items:center;gap:10px;margin-bottom:6px;border:1px solid var(--g100);cursor:pointer;transition:all .3s}
+.bsv:hover{border-color:var(--gd);transform:translateX(-2px)}
+.bsv .cl{width:4px;height:36px;border-radius:3px;flex-shrink:0}
+.bsv .inf{flex:1}
+.bsv .inf .n{font-weight:600;font-size:12px;margin-bottom:2px}
+.bsv .inf .d{font-size:10px;color:var(--g500)}
+.bsv .pr{font-family:var(--he);font-weight:800;font-size:14px;color:var(--gk)}
+@keyframes fI{from{opacity:0}to{opacity:1}}
+@keyframes fU{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes sU{from{transform:translateY(100%)}to{transform:translateY(0)}}
+@media(max-width:360px){.tgr{grid-template-columns:repeat(3,1fr)}.hero h1{font-size:18px}.hero{height:200px}.nb{padding:5px 8px;min-width:48px}.nb i{font-size:16px}.nb{font-size:8px}}
+</style>
+</head>
+<body>
+
+<script>
+(function(){
+  var logo = localStorage.getItem('adarLogo');
+  if(logo) {
+    document.addEventListener('DOMContentLoaded', function(){
+      ['spL','auL','hL','heroL'].forEach(function(id){
+        var el = document.getElementById(id);
+        if(el) el.innerHTML = '<img src="'+logo+'">';
+      });
+    });
+  }
+})();
+</script>
+
+<!-- Splash Screen -->
+<div id="sp"><div class="sp"><div class="bsd">בס״ד</div><div class="sp-l" id="spL"><i class="fas fa-gem"></i></div><div class="sp-n en">Adar Sasi Nail</div><div class="sp-s en">Beauty & Nail Art</div><div class="sp-b"><div></div></div></div></div>
+
+<!-- Auth Screen -->
+<div id="au"><div class="au-bg"></div><div class="au-bsd">בס״ד</div>
+<div class="au-w"><div class="au-c">
+<div class="au-top"><div class="au-lg" id="auL"><i class="fas fa-gem"></i></div><div class="au-br en">Adar Sasi Nail</div><div class="au-sb en">Beauty & Nail Art</div></div>
+<div class="au-f"><div class="au-fh"><div class="au-em">💅</div><h2>ברוכה הבאה!</h2></div>
+<div class="au-fi"><i class="fas fa-user"></i><input type="text" id="aN" placeholder="השם שלך"></div>
+<div class="au-fi"><i class="fas fa-phone"></i><input type="tel" id="aPh" placeholder="מספר טלפון" dir="ltr"></div>
+<button class="au-btn" onclick="doAuth()"><span>בואי נתחיל</span><i class="fas fa-arrow-left"></i></button>
+</div>
+</div></div></div>
+
+<!-- Main App -->
+<div id="app" style="display:none">
+
+<!-- Header -->
+<header class="hdr"><div class="hdr-in"><div class="hdr-l"><div class="hdr-lg" id="hL"><i class="fas fa-gem"></i></div><span class="hdr-nm en">Adar Sasi Nail</span></div><div class="hdr-r"><button class="bi" onclick="oN()" style="position:relative"><i class="fas fa-bell"></i><span class="ndot" id="nD"></span></button><button class="bi" onclick="oPr()"><i class="fas fa-user-circle"></i></button></div></div></header>
+
+<!-- Navigation -->
+<nav class="nv">
+<button class="nb on" data-p="h"><i class="fas fa-home"></i><span>ראשי</span></button>
+<button class="nb" data-p="b"><i class="fas fa-calendar-plus"></i><span>תור</span></button>
+<button class="nb" data-p="w"><i class="fas fa-clock"></i><span>המתנה</span></button>
+<button class="nb" data-p="m"><i class="fas fa-calendar-check"></i><span>תורים</span></button>
+<button class="nb" data-p="g"><i class="fas fa-images"></i><span>גלריה</span></button>
+</nav>
+
+<!-- Body -->
+<div class="bd">
+
+<!-- Home Page -->
+<div class="pg on" id="pgH"><div class="hero"><div class="hero-gw"></div><div class="hero-in"><div class="hero-lg" id="heroL"><i class="fas fa-gem"></i></div><h1 class="en">Adar Sasi Nail</h1><p class="en">Beauty & Nail Art</p><button class="btn btn-ol" onclick="go('b')" style="width:auto;display:inline-flex;padding:8px 16px;font-size:11px"><i class="fas fa-calendar-plus"></i> קבעי תור</button></div></div>
+<div class="sec"><h2 class="sec-t">סוג טיפול</h2><div class="sec-ln"></div><div class="svc-sc" id="hS"></div></div>
+<div class="sec"><h2 class="sec-t">עבודות</h2><div class="sec-ln"></div><div class="svc-sc" id="hG"></div></div>
+<div class="sec" style="padding-bottom:30px"><h2 class="sec-t">צרי קשר</h2><div class="sec-ln"></div>
+<div class="soc-row">
+<a class="soc-circle fb" id="ctFB" target="_blank"><i class="fab fa-facebook-f"></i></a>
+<a class="soc-circle tt" id="ctTT" target="_blank"><i class="fab fa-tiktok"></i></a>
+<a class="soc-circle ig" id="ctIG" target="_blank"><i class="fab fa-instagram"></i></a>
+<a class="soc-circle wa" id="ctWA" target="_blank"><i class="fab fa-whatsapp"></i></a>
+<a class="soc-circle" id="ctPH" style="background:#34495e"><i class="fas fa-phone"></i></a>
+</div></div></div>
+
+<!-- Booking Page -->
+<div class="pg" id="pgB" style="padding:12px">
+<div id="bs1"><div style="text-align:center;margin-bottom:12px"><h2 style="font-size:15px">בחרי טיפול</h2><p style="color:var(--g500);font-size:10px">מה תרצי? 💅</p></div><div id="bSL"></div></div>
+
+<div id="bs2" style="display:none"><div style="text-align:center;margin-bottom:12px"><h2 style="font-size:15px">תאריך ושעה</h2><p id="bSvL" style="color:var(--g500);font-size:10px"></p></div>
+<div class="mp"><div class="mn"><button class="bi" onclick="chM(-1)"><i class="fas fa-chevron-right"></i></button><span class="ml" id="mL"></span><button class="bi" onclick="chM(1)"><i class="fas fa-chevron-left"></i></button></div><div class="mg" id="mG"></div></div>
+<div class="tb" id="tBx" style="display:none"><h4 id="dL"></h4><div class="tgr" id="tGr"></div></div>
+<button class="bk" onclick="bS(1)"><i class="fas fa-arrow-right"></i> חזרה</button></div>
+
+<div id="bs3" style="display:none"><div style="text-align:center;margin-bottom:12px"><h2 style="font-size:15px">אישור</h2><p style="color:var(--g500);font-size:10px">בדקי ✨</p></div>
+<div class="cf"><div class="cr"><i class="fas fa-gem"></i><div><label>טיפול</label><span id="cfS"></span></div></div><div class="cr"><i class="fas fa-calendar"></i><div><label>תאריך</label><span id="cfD"></span></div></div><div class="cr"><i class="fas fa-clock"></i><div><label>שעה</label><span id="cfT"></span></div></div><div class="cr"><i class="fas fa-hourglass-half"></i><div><label>משך</label><span id="cfDr"></span></div></div><div class="cr"><i class="fas fa-shekel-sign"></i><div><label>מחיר</label><span id="cfP"></span></div></div></div>
+<div class="cf-extras"><h4>תוספות לטיפול</h4>
+<label class="cf-chk"><input type="checkbox" id="chkArt"><div class="cf-chk-info"><div class="n">🎨 ציור</div><div class="d">המחיר יעודכן ע״י אדר</div></div></label>
+<label class="cf-chk"><input type="checkbox" id="chkExt" onchange="toggleExtCount()"><div class="cf-chk-info"><div class="n">💅 השלמה</div><div class="d">המחיר יעודכן ע״י אדר</div></div></label>
+<div class="ext-count" id="extCountBox"><label>כמה ציפורניים להשלמה?</label><input type="number" id="extCountInput" min="1" max="10" value="1"></div>
+</div>
+<div class="fg"><label>הערות</label><textarea id="bNt" class="fi" rows="2" placeholder="הערות..."></textarea></div>
+<button class="btn btn-gd" onclick="cfBk()"><i class="fas fa-check-circle"></i> שליחה</button>
+<button class="bk" onclick="bS(2)"><i class="fas fa-arrow-right"></i> חזרה</button></div>
+
+<div id="bsOk" style="display:none"><div class="succ"><div class="ic"><i class="fas fa-paper-plane"></i></div><h2>נשלח! ✨</h2><p id="succMsg">תקבלי הודעה כשיאושר</p><div class="wb" id="succWait" style="display:none"><i class="fas fa-clock"></i><h3>ממתין לאישור</h3><p>דקות ספורות</p></div><div id="succI" style="background:var(--g50);border:1px solid var(--g100);border-radius:var(--r);padding:8px;text-align:right;margin-bottom:10px;font-size:11px"></div><button class="btn btn-bk" onclick="go('h')">חזרה</button></div></div>
+</div>
+
+<!-- Waitlist Page -->
+<div class="pg" id="pgW">
+<h1 class="pg-t">⏰ רשימת המתנה</h1>
+<p class="pg-s">הירשמי כשאין תורים פנויים</p>
+<div class="wl-box">
+<i class="fas fa-hourglass-half"></i>
+<h3>אין תור מתאים?</h3>
+<p>הירשמי לרשימת המתנה ואדר תיצור איתך קשר כשיתפנה מקום!</p>
+<button class="btn btn-gd" onclick="oWLM()"><i class="fas fa-plus"></i> הירשמי לרשימת המתנה</button>
+</div>
+<h3 style="padding:12px 12px 8px;font-size:12px">הבקשות שלי</h3>
+<div id="myWL"></div>
+</div>
+
+<!-- My Appointments Page -->
+<div class="pg" id="pgM">
+<h1 class="pg-t">התורים שלי</h1>
+<p class="pg-s">ניהול</p>
+<div class="tabs"><button class="tab on" onclick="swT('up',this)">עתידיים</button><button class="tab" onclick="swT('past',this)">היסטוריה</button></div>
+<div id="maL"></div>
+</div>
+
+<!-- Gallery Page -->
+<div class="pg" id="pgG">
+<h1 class="pg-t">גלריה</h1>
+<p class="pg-s">✨</p>
+<div id="gGr" class="gg"></div>
+</div>
+
+</div>
+</div>
+
+<!-- Modals -->
+<div class="md" id="mWL"><div class="md-bg" onclick="cM('mWL')"></div><div class="md-bx">
+<div class="md-tp"><h3>⏰ הרשמה לרשימת המתנה</h3><button class="bi" onclick="cM('mWL')"><i class="fas fa-times"></i></button></div>
+<div class="md-bd">
+<div class="fg"><label>בחרי טיפול</label><select class="fi" id="wlSvc"></select></div>
+<div class="fg"><label>באיזה תאריך?</label><input type="date" class="fi" id="wlDate"></div>
+<div class="fg">
+<label>איזה שעות מתאימות לך?</label>
+<div class="time-range">
+<select class="fi" id="wlFrom"><option value="08:00">08:00</option><option value="09:00">09:00</option><option value="10:00" selected>10:00</option><option value="11:00">11:00</option><option value="12:00">12:00</option><option value="13:00">13:00</option><option value="14:00">14:00</option><option value="15:00">15:00</option><option value="16:00">16:00</option><option value="17:00">17:00</option><option value="18:00">18:00</option><option value="19:00">19:00</option><option value="20:00">20:00</option></select>
+<span>עד</span>
+<select class="fi" id="wlTo"><option value="14:00">14:00</option><option value="15:00">15:00</option><option value="16:00">16:00</option><option value="17:00">17:00</option><option value="18:00">18:00</option><option value="19:00">19:00</option><option value="20:00" selected>20:00</option><option value="21:00">21:00</option><option value="22:00">22:00</option></select>
+</div>
+</div>
+<div class="fg"><label>הערות</label><textarea class="fi" id="wlNotes" rows="2" placeholder="הערות נוספות..."></textarea></div>
+</div>
+<div class="md-ft">
+<button class="btn btn-wh btn-sm" onclick="cM('mWL')">ביטול</button>
+<button class="btn btn-gd btn-sm" onclick="submitWL()"><i class="fas fa-paper-plane"></i> שלחי בקשה</button>
+</div>
+</div></div>
+
+<div class="md" id="mDt"><div class="md-bg" onclick="cM('mDt')"></div><div class="md-bx"><div class="md-tp"><h3>פרטים</h3><button class="bi" onclick="cM('mDt')"><i class="fas fa-times"></i></button></div><div class="md-bd" id="dB"></div><div class="md-ft" id="dF"></div></div></div>
+
+<div class="md" id="mN"><div class="md-bg" onclick="cM('mN')"></div><div class="md-bx"><div class="md-tp"><h3>🔔 הודעות</h3><button class="bi" onclick="cM('mN')"><i class="fas fa-times"></i></button></div><div class="md-bd" id="nL"></div></div></div>
+
+<div class="md" id="mPr"><div class="md-bg" onclick="cM('mPr')"></div><div class="md-bx"><div class="md-tp"><h3>פרופיל</h3><button class="bi" onclick="cM('mPr')"><i class="fas fa-times"></i></button></div><div class="md-bd" style="text-align:center"><div style="font-size:34px;color:var(--g300);margin-bottom:6px"><i class="fas fa-user-circle"></i></div><p style="font-size:14px;font-weight:700" id="prN"></p><p style="font-size:11px;color:var(--g500);margin-top:2px" id="prP"></p><button class="btn btn-wh" style="margin-top:12px;color:var(--dn);border-color:var(--dn);font-size:10px" onclick="doLo()"><i class="fas fa-sign-out-alt"></i> התנתקות</button></div></div></div>
+
+<div class="lb" id="lb" onclick="clLb()"><button class="lb-x"><i class="fas fa-times"></i></button><img id="lbI"><p id="lbC"></p></div>
+
+<div class="toast" id="toast"><i class="fas fa-check-circle"></i><span id="tM"></span></div>
+<script>
+const firebaseConfig = {apiKey:"AIzaSyDSJoLMkPO0dbZx1x6uixITgzZnx1jEqVc",authDomain:"adarsasinail.firebaseapp.com",databaseURL:"https://adarsasinail-default-rtdb.firebaseio.com",projectId:"adarsasinail",storageBucket:"adarsasinail.firebasestorage.app",messagingSenderId:"993038338881",appId:"1:993038338881:web:b5ea1415981c2759b6fc0"};
+firebase.initializeApp(firebaseConfig);
+const database = firebase.database();
+
+// ========== OneSignal Setup ==========
+window.OneSignalDeferred = window.OneSignalDeferred || [];
+OneSignalDeferred.push(async function(OneSignal) {
+  await OneSignal.init({
+    appId: "33467390-aa9d-4884-bdfa-6c1f96a85227",
+    notifyButton: { enable: false },
+    allowLocalhostAsSecureOrigin: true
+  });
+});
+
+const Q=id=>document.getElementById(id),CK='adarClient_v6';
+let db={},me=null,bSvc=null,bDt=null,bTm=null,bMo=new Date().getMonth()+1,bYr=new Date().getFullYear();
+
+const defaultDB = {admin:{user:'adar',pass:'1234',biz:'Adar Sasi Nail',phone:'0501234567',logo:null,instagram:'',tiktok:'',facebook:''},svcs:[{id:1,name:'לק ג׳ל רגיל',dur:60,price:120,color:'#FFD700',img:null,on:1},{id:2,name:'בניית ציפורניים',dur:90,price:200,color:'#FF69B4',img:null,on:1},{id:3,name:'מניקור + לק ג׳ל',dur:75,price:150,color:'#DDA0DD',img:null,on:1},{id:4,name:'הסרת לק ג׳ל',dur:30,price:50,color:'#98FB98',img:null,on:1},{id:5,name:'פדיקור + לק ג׳ל',dur:90,price:180,color:'#87CEEB',img:null,on:1}],openSlots:{},bl:[],apts:[],cls:[],gal:[],ntf:[],waitlist:[],nx:{s:6,a:1,c:1,g:1,n:1,w:1}};
+
+function loadFromFirebase() {
+  database.ref('/').on('value', (snapshot) => {
+    const data = snapshot.val();
+    if (data) {
+      db = {...defaultDB, ...data};
+      ['svcs','apts','cls','gal','ntf','waitlist','bl'].forEach(key => {
+        if (!db[key]) db[key] = [];
+        if (db[key] && !Array.isArray(db[key])) db[key] = Object.values(db[key]);
+      });
+      if (!db.openSlots) db.openSlots = {};
+      if (!db.nx) db.nx = defaultDB.nx;
+      if (!db.nx.w) db.nx.w = 1;
+    } else {
+      db = {...defaultDB};
+      database.ref('/').set(db);
+    }
+    cleanExpiredWaitlist();
+    uL();
+    if (me) { lH(); uND(); lMyWL(); }
+  });
+}
+function sDB() { database.ref('/').set(db); }
+loadFromFirebase();
+
+function cleanExpiredWaitlist() {
+  if (!db.waitlist) return;
+  const now = new Date();
+  const td = now.toISOString().split('T')[0];
+  const before = db.waitlist.length;
+  db.waitlist = db.waitlist.filter(w => {
+    if (w.st === 'approved') return true;
+    if (w.st === 'cancelled') return false;
+    if (w.date < td) return false;
+    return true;
+  });
+  if (db.waitlist.length !== before) sDB();
+}
+
+function toggleExtCount() {
+  const chk = Q('chkExt');
+  const box = Q('extCountBox');
+  box.classList.toggle('show', chk.checked);
+}
+
+function uL() {
+  const l = db.admin?.logo;
+  ['spL','auL','hL','heroL'].forEach(id => {
+    const e = Q(id);
+    if (e) e.innerHTML = l ? '<img src="'+l+'">' : '<i class="fas fa-gem"></i>';
+  });
+  if (l) localStorage.setItem('adarLogo', l);
+}
+
+function ckC() {
+  const s = localStorage.getItem(CK);
+  if (s) {
+    try {
+      const d = JSON.parse(s);
+      const checkClient = () => {
+        if (db.cls && db.cls.length > 0) {
+          const c = db.cls.find(x => x.id === d.id && x.phone === d.phone);
+          if (c) { me = c; Q('sp').classList.add('h'); Q('app').style.display = 'block'; uL(); lH(); chR(); lMyWL(); registerOneSignal(); return true; }
+        }
+        return false;
+      };
+      setTimeout(() => { if (!checkClient()) { setTimeout(() => { if (!checkClient()) { Q('sp').classList.add('h'); Q('au').classList.add('sh'); } }, 1500); } }, 500);
+      return true;
+    } catch (e) { localStorage.removeItem(CK); }
+  }
+  return false;
+}
+
+if (!ckC()) { setTimeout(() => { Q('sp').classList.add('h'); Q('au').classList.add('sh'); }, 2000); }
+
+function doAuth() {
+  const nm = Q('aN').value.trim();
+  const ph = Q('aPh').value.trim();
+  if (!nm || !ph) { alert('מלאי שם וטלפון'); return; }
+  if (!/^0[0-9]{8,9}$/.test(ph.replace(/-/g, ''))) { alert('טלפון לא תקין'); return; }
+  let c = db.cls.find(x => x.phone === ph);
+  if (!c) { c = {id: db.nx.c++, name: nm, phone: ph, created: new Date().toISOString()}; db.cls.push(c); } else { c.name = nm; }
+  sDB();
+  me = c;
+  localStorage.setItem(CK, JSON.stringify({id: c.id, phone: c.phone}));
+  Q('au').classList.remove('sh');
+  Q('app').style.display = 'block';
+  uL(); lH(); chR(); registerOneSignal();
+  tt('ברוכה הבאה! 💅');
+}
+
+function doLo() {
+  if (!confirm('להתנתק?')) return;
+  localStorage.removeItem(CK);
+  me = null;
+  cM('mPr');
+  Q('app').style.display = 'none';
+  Q('au').classList.add('sh');
+  Q('aN').value = ''; Q('aPh').value = '';
+}
+
+function oPr() { Q('prN').textContent = me.name; Q('prP').textContent = me.phone; oM('mPr'); }
+
+document.querySelectorAll('.nb').forEach(b => { b.onclick = () => { document.querySelectorAll('.nb').forEach(x => x.classList.remove('on')); b.classList.add('on'); go(b.dataset.p); }; });
+
+function go(p) {
+  const m = {h:'pgH', b:'pgB', w:'pgW', m:'pgM', g:'pgG'};
+  document.querySelectorAll('.pg').forEach(x => x.classList.remove('on'));
+  Q(m[p]).classList.add('on');
+  document.querySelectorAll('.nb').forEach(x => x.classList.toggle('on', x.dataset.p === p));
+  if (p === 'h') lH();
+  if (p === 'b') iB();
+  if (p === 'w') lMyWL();
+  if (p === 'm') lMA();
+  if (p === 'g') lGl();
+}
+
+function slt(date, dur) {
+  if (!db.bl) db.bl = [];
+  if (db.bl.includes(date)) return [];
+  if (!db.openSlots || !db.openSlots[date]) return [];
+  const daySlots = db.openSlots[date];
+  const openTimes = Object.keys(daySlots).filter(t => daySlots[t] === true).sort();
+  if (openTimes.length === 0) return [];
+  const res = [];
+  const bookedSlots = {};
+  const apts = db.apts || [];
+  apts.filter(a => a.date === date && a.st !== 'cancelled').forEach(a => {
+    const [h, m] = a.time.split(':').map(Number);
+    const start = h * 60 + m;
+    for (let i = 0; i < a.dur; i += 5) {
+      const t = start + i;
+      const time = String(Math.floor(t/60)).padStart(2,'0') + ':' + String(t%60).padStart(2,'0');
+      bookedSlots[time] = true;
+    }
+  });
+  for (const time of openTimes) { if (!bookedSlots[time]) res.push({time: time, free: true}); }
+  const td = new Date().toISOString().split('T')[0];
+  if (date === td) {
+    const now = new Date();
+    const nm = now.getHours() * 60 + now.getMinutes();
+    return res.filter(s => { const [h, m] = s.time.split(':').map(Number); return h * 60 + m > nm + 30; });
+  }
+  return res;
+}
+
+function lH() {
+  const svcs = db.svcs || [];
+  const gal = db.gal || [];
+  Q('hS').innerHTML = svcs.filter(s => s.on).map(s =>
+    '<div class="svc-cd" onclick="qkB('+s.id+')"><div class="svc-cd-im">' + (s.img ? '<img src="'+s.img+'">' : '<i class="fas fa-gem"></i>') + '</div><div class="svc-cd-if"><div class="n">'+s.name+'</div><div class="m"><span>'+s.dur+'דק׳</span><span class="p">'+s.price+'₪</span></div></div></div>'
+  ).join('');
+  Q('hG').innerHTML = gal.length ? gal.slice(0,6).map(x => '<div class="svc-cd" style="width:110px" onclick="opLb(\''+x.img+'\',\''+(x.cap||'')+'\')"><div class="svc-cd-im" style="height:110px"><img src="'+x.img+'"></div></div>').join('') : '<p style="color:var(--g400);font-size:9px">בקרוב ✨</p>';
+  const cp = (db.admin?.phone || '').replace(/^0/,'972').replace(/-/g,'');
+  Q('ctFB').href = db.admin?.facebook || '#';
+  Q('ctTT').href = db.admin?.tiktok || '#';
+  Q('ctIG').href = db.admin?.instagram || '#';
+  Q('ctWA').href = 'https://wa.me/' + cp;
+  Q('ctPH').href = 'tel:' + (db.admin?.phone || '');
+}
+
+function qkB(sid) {
+  const s = db.svcs.find(x => x.id === sid);
+  if (!s) return;
+  bSvc = s; bDt = null; bTm = null;
+  bMo = new Date().getMonth() + 1; bYr = new Date().getFullYear();
+  document.querySelectorAll('.nb').forEach(x => x.classList.remove('on'));
+  document.querySelector('.nb[data-p="b"]').classList.add('on');
+  document.querySelectorAll('.pg').forEach(x => x.classList.remove('on'));
+  Q('pgB').classList.add('on');
+  Q('bSvL').textContent = s.name + ' • ' + s.dur + 'דק׳ • ' + s.price + '₪';
+  ['bs1','bs2','bs3','bsOk'].forEach(id => Q(id).style.display = 'none');
+  Q('bs2').style.display = 'block';
+  setTimeout(() => rMo(), 50);
+}
+
+function iB() {
+  bSvc = null; bDt = null; bTm = null;
+  bMo = new Date().getMonth() + 1; bYr = new Date().getFullYear();
+  bS(1);
+  const svcs = db.svcs || [];
+  Q('bSL').innerHTML = svcs.filter(s => s.on).map(s =>
+    '<div class="bsv" onclick=\'selS('+JSON.stringify(s).replace(/'/g,"\\'")+')\'><div class="cl" style="background:'+s.color+'"></div><div class="inf"><div class="n">'+s.name+'</div><div class="d"><i class="fas fa-clock"></i> '+s.dur+'דק׳</div></div><div class="pr">'+s.price+'₪</div></div>'
+  ).join('');
+}
+
+function bS(n) { ['bs1','bs2','bs3','bsOk'].forEach(id => Q(id).style.display = 'none'); Q('bs'+n).style.display = 'block'; window.scrollTo({top: 0, behavior: 'smooth'}); }
+function selS(s) { bSvc = s; bDt = null; bTm = null; Q('bSvL').textContent = s.name + ' • ' + s.dur + 'דק׳ • ' + s.price + '₪'; bS(2); setTimeout(() => rMo(), 50); }
+function chM(dir) { bMo += dir; if (bMo > 12) { bMo = 1; bYr++; } if (bMo < 1) { bMo = 12; bYr--; } rMo(); }
+
+function rMo() {
+  if (!bSvc) return;
+  const mn = ['ינואר','פברואר','מרץ','אפריל','מאי','יוני','יולי','אוגוסט','ספטמבר','אוקטובר','נובמבר','דצמבר'];
+  Q('mL').textContent = mn[bMo-1] + ' ' + bYr;
+  const td = new Date().toISOString().split('T')[0];
+  const fd = new Date(bYr, bMo-1, 1).getDay();
+  const dim = new Date(bYr, bMo, 0).getDate();
+  const hd = ['א׳','ב׳','ג׳','ד׳','ה׳','ו׳','ש׳'];
+  let h = hd.map(d => '<div class="mh">'+d+'</div>').join('');
+  for (let i = 0; i < fd; i++) h += '<div class="mc emp"></div>';
+  for (let d = 1; d <= dim; d++) {
+    const ds = bYr + '-' + String(bMo).padStart(2,'0') + '-' + String(d).padStart(2,'0');
+    const past = ds < td;
+    const isT = ds === td;
+    const isSel = ds === bDt;
+    let cls = 'mc';
+    if (past) { cls += ' off'; }
+    else { const s = slt(ds, bSvc.dur); cls += s.length ? ' av' : ''; }
+    if (isT) cls += ' td';
+    if (isSel) cls += ' sel';
+    const canClick = !past;
+    h += '<div class="'+cls+'" '+(canClick ? 'onclick="selD(\''+ds+'\')"' : '')+'>'+d+'</div>';
+  }
+  Q('mG').innerHTML = h;
+  Q('tBx').style.display = 'none';
+}
+
+function selD(dt) {
+  bDt = dt; bTm = null; rMo();
+  const s = slt(dt, bSvc.dur);
+  Q('dL').textContent = new Date(dt).toLocaleDateString('he-IL', {weekday:'long', day:'numeric', month:'long'});
+  if (s.length === 0) {
+    Q('tGr').innerHTML = '<div class="wl-box" style="margin:0"><i class="fas fa-hourglass-half"></i><h3>אין תורים פנויים</h3><p>רוצה להירשם לרשימת ההמתנה?</p><button class="btn btn-gd btn-sm" onclick="addToWLFromCal(\''+dt+'\')"><i class="fas fa-clock"></i> הירשמי להמתנה</button></div>';
+  } else {
+    Q('tGr').innerHTML = s.map(x => '<div class="ts" onclick="selT(\''+x.time+'\')">'+x.time+'</div>').join('');
+  }
+  Q('tBx').style.display = 'block';
+  Q('tBx').scrollIntoView({behavior: 'smooth'});
+}
+
+function addToWLFromCal(date) {
+  if (!bSvc) return;
+  Q('wlSvc').innerHTML = '<option value="'+bSvc.id+'" selected>'+bSvc.name+' ('+bSvc.dur+'דק׳ '+bSvc.price+'₪)</option>';
+  Q('wlDate').value = date;
+  Q('wlNotes').value = '';
+  oM('mWL');
+}
+
+function selT(t) {
+  bTm = t;
+  document.querySelectorAll('.ts').forEach(el => el.classList.toggle('sel', el.textContent.trim() === t));
+  setTimeout(() => {
+    Q('cfS').textContent = bSvc.name;
+    Q('cfD').textContent = new Date(bDt).toLocaleDateString('he-IL', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
+    Q('cfT').textContent = bTm;
+    Q('cfDr').textContent = bSvc.dur + ' דקות';
+    Q('cfP').textContent = bSvc.price + '₪';
+    Q('bNt').value = '';
+    Q('chkArt').checked = false;
+    Q('chkExt').checked = false;
+    Q('extCountBox').classList.remove('show');
+    Q('extCountInput').value = '1';
+    bS(3);
+  }, 200);
+}
+
+function cfBk() {
+  if (!me || !bSvc || !bDt || !bTm) return;
+  const hasArt = Q('chkArt').checked;
+  const hasExt = Q('chkExt').checked;
+  const extCount = hasExt ? parseInt(Q('extCountInput').value) || 1 : 0;
+  const s = slt(bDt, bSvc.dur);
+  const x = s.find(z => z.time === bTm);
+  if (!x) { alert('השעה נתפסה!'); bS(2); return; }
+  let notes = Q('bNt').value.trim();
+  if (hasArt) notes += (notes ? '\n' : '') + '🎨 ציור';
+  if (hasExt) notes += (notes ? '\n' : '') + '💅 השלמה (' + extCount + ' ציפורניים)';
+  const apt = { id: db.nx.a++, cid: me.id, sid: bSvc.id, sn: bSvc.name, date: bDt, time: bTm, dur: bSvc.dur, price: bSvc.price, st: 'pending', notes: notes, hasArt: hasArt, hasExt: hasExt, extCount: extCount, created: new Date().toISOString() };
+  if (!db.apts) db.apts = [];
+  db.apts.push(apt);
+  sDB();
+  const msg = (hasArt || hasExt) ? 'ממתין לאישור ועדכון מחיר' : 'תקבלי הודעה כשהתור יאושר';
+  Q('succMsg').textContent = msg;
+  Q('succWait').style.display = (hasArt || hasExt) ? 'block' : 'none';
+  Q('succI').innerHTML = '<div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid var(--g200)"><span style="color:var(--g500)">טיפול</span><span style="font-weight:600">'+bSvc.name+'</span></div><div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid var(--g200)"><span style="color:var(--g500)">תאריך</span><span style="font-weight:600">'+new Date(bDt).toLocaleDateString('he-IL')+'</span></div><div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid var(--g200)"><span style="color:var(--g500)">שעה</span><span style="font-weight:600">'+bTm+'</span></div>'+(hasArt?'<div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid var(--g200)"><span style="color:var(--g500)">🎨 ציור</span><span style="color:var(--ok)">✓</span></div>':'')+(hasExt?'<div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid var(--g200)"><span style="color:var(--g500)">💅 השלמה</span><span style="color:var(--ok)">'+extCount+' ציפורניים</span></div>':'')+'<div style="display:flex;justify-content:space-between;padding:3px 0"><span style="color:var(--g500)">מחיר</span><span style="font-weight:600">'+(hasArt||hasExt?'יעודכן ע״י אדר':bSvc.price+'₪')+'</span></div>';
+  ['bs1','bs2','bs3'].forEach(id => Q(id).style.display = 'none');
+  Q('bsOk').style.display = 'block';
+  uND();
+}
+
+// ========== Waitlist ==========
+function oWLM() {
+  const svcs = db.svcs || [];
+  Q('wlSvc').innerHTML = '<option value="">בחרי טיפול</option>' + svcs.filter(s => s.on).map(s => '<option value="'+s.id+'">'+s.name+' ('+s.dur+'דק׳ '+s.price+'₪)</option>').join('');
+  const td = new Date().toISOString().split('T')[0];
+  Q('wlDate').min = td;
+  Q('wlDate').value = td;
+  Q('wlNotes').value = '';
+  oM('mWL');
+}
+
+function submitWL() {
+  if (!me) return;
+  const sid = parseInt(Q('wlSvc').value);
+  const date = Q('wlDate').value;
+  const from = Q('wlFrom').value;
+  const to = Q('wlTo').value;
+  const notes = Q('wlNotes').value.trim();
+  if (!sid || !date) { alert('בחרי טיפול ותאריך'); return; }
+  const sv = db.svcs.find(s => s.id === sid);
+  if (!sv) return;
+  if (!db.waitlist) db.waitlist = [];
+  if (!db.nx.w) db.nx.w = 1;
+  const wl = { id: db.nx.w++, cid: me.id, sid: sid, sn: sv.name, date: date, timeFrom: from, timeTo: to, notes: notes, st: 'pending', created: new Date().toISOString() };
+  db.waitlist.push(wl);
+  sDB();
+  cM('mWL');
+  tt('נרשמת לרשימת ההמתנה! ✨');
+  lMyWL();
+}
+
+function lMyWL() {
+  if (!me) return;
+  if (!db.waitlist) db.waitlist = [];
+  const td = new Date().toISOString().split('T')[0];
+  const wl = db.waitlist.filter(w => w.cid === me.id && w.st !== 'cancelled' && w.st !== 'rejected' && (w.date >= td || w.st === 'approved'));
+  Q('myWL').innerHTML = wl.length ? wl.map(w => {
+    const stClass = w.st === 'pending' ? 'bg-wt' : 'bg-ok';
+    const stText = w.st === 'pending' ? 'ברשימת המתנה' : 'אושר! 🎉';
+    return '<div class="wl-item"><div class="wl-top"><div class="wl-sv">'+w.sn+'</div><span class="bg '+stClass+'">'+stText+'</span></div><div class="wl-info"><i class="fas fa-calendar"></i> '+new Date(w.date).toLocaleDateString('he-IL')+' • <i class="fas fa-clock"></i> '+w.timeFrom+' - '+w.timeTo+'</div>'+(w.approvedTime?'<div style="color:var(--ok);font-size:10px;margin-top:4px;font-weight:600"><i class="fas fa-check"></i> נקבע לשעה '+w.approvedTime+'</div>':'')+(w.st==='pending'?'<button class="btn btn-wh btn-sm" style="margin-top:6px" onclick="cancelWL('+w.id+')"><i class="fas fa-times"></i> הסרה</button>':'')+'</div>';
+  }).join('') : '<div class="emp" style="margin:0 12px"><i class="fas fa-clock"></i><p>אין בקשות המתנה</p></div>';
+}
+
+function cancelWL(id) {
+  if (!confirm('להסיר מרשימת ההמתנה?')) return;
+  const w = db.waitlist.find(x => x.id === id);
+  if (w) { w.st = 'cancelled'; sDB(); lMyWL(); tt('הוסרת מרשימת ההמתנה'); }
+}
+
+// ========== My Appointments ==========
+function lMA() { if (!me) return; swT('up', document.querySelector('.tab.on') || document.querySelector('.tab')); }
+
+function swT(t, el) {
+  document.querySelectorAll('.tab').forEach(b => b.classList.remove('on'));
+  if (el) el.classList.add('on');
+  const td = new Date().toISOString().split('T')[0];
+  let a = (db.apts || []).filter(x => x.cid === me.id);
+  a = t === 'up' ? a.filter(x => x.date >= td && x.st !== 'cancelled').sort((a,b) => a.date.localeCompare(b.date)) : a.filter(x => x.date < td || x.st === 'cancelled').sort((a,b) => b.date.localeCompare(a.date));
+  Q('maL').innerHTML = a.length ? a.map(x => '<div class="ma '+(x.st==='cancelled'?'cn':x.st==='pending'?'pn':'')+'" onclick="shDt('+x.id+')"><div class="ma-top"><div class="ma-sv">'+x.sn+(x.hasArt?' 🎨':'')+(x.hasExt?' 💅':'')+'</div><span class="bg '+(x.st==='cancelled'?'bg-no':x.st==='pending'?'bg-wt':'bg-ok')+'">'+(x.st==='cancelled'?'בוטל':x.st==='pending'?'ממתין':'מאושר')+'</span></div><div class="ma-mt"><span><i class="fas fa-calendar"></i>'+new Date(x.date).toLocaleDateString('he-IL')+'</span><span><i class="fas fa-clock"></i>'+x.time+'</span></div><div style="font-size:10px;color:var(--gk);font-weight:600;margin-top:2px">'+x.price+'₪</div></div>').join('') : '<div class="emp"><i class="fas fa-calendar"></i><p>'+(t==='up'?'אין תורים עתידיים':'אין היסטוריה')+'</p></div>';
+}
+
+function shDt(id) {
+  const a = (db.apts || []).find(x => x.id === id);
+  if (!a) return;
+  const at = new Date(a.date + 'T' + a.time);
+  const h = (at - new Date()) / (1e3 * 60 * 60);
+  const ok = h >= (db.admin?.cH || 24);
+  let extras = '';
+  if (a.hasArt) extras += '<div class="dt"><i class="fas fa-paint-brush"></i><span class="dl">ציור:</span><span class="dv" style="color:var(--ok)">✓</span></div>';
+  if (a.hasExt) extras += '<div class="dt"><i class="fas fa-hand-sparkles"></i><span class="dl">השלמה:</span><span class="dv" style="color:var(--ok)">'+(a.extCount||1)+' ציפורניים</span></div>';
+  Q('dB').innerHTML = '<div class="dt"><i class="fas fa-gem"></i><span class="dl">טיפול:</span><span class="dv">'+a.sn+'</span></div>'+extras+'<div class="dt"><i class="fas fa-calendar"></i><span class="dl">תאריך:</span><span class="dv">'+new Date(a.date).toLocaleDateString('he-IL')+'</span></div><div class="dt"><i class="fas fa-clock"></i><span class="dl">שעה:</span><span class="dv">'+a.time+'</span></div><div class="dt"><i class="fas fa-shekel-sign"></i><span class="dl">מחיר:</span><span class="dv">'+a.price+'₪</span></div><div class="dt"><i class="fas fa-info-circle"></i><span class="dl">סטטוס:</span><span class="bg '+(a.st==='cancelled'?'bg-no':a.st==='pending'?'bg-wt':'bg-ok')+'">'+(a.st==='cancelled'?'בוטל':a.st==='pending'?'ממתין':'מאושר')+'</span></div>';
+  let ft = '<button class="btn btn-wh btn-sm" onclick="cM(\'mDt\')">סגירה</button>';
+  if (a.st !== 'cancelled' && a.date >= new Date().toISOString().split('T')[0]) {
+    if (ok) ft += '<button class="btn btn-dn btn-sm" onclick="cnMA('+a.id+')"><i class="fas fa-times"></i> ביטול</button>';
+    else ft += '<span style="font-size:8px;color:var(--dn);flex:1;text-align:center">לא ניתן לבטל פחות מ-'+(db.admin?.cH||24)+' שעות</span>';
+  }
+  Q('dF').innerHTML = ft;
+  oM('mDt');
+}
+
+function cnMA(id) {
+  if (!confirm('לבטל את התור?')) return;
+  const a = db.apts.find(x => x.id === id);
+  if (a) { a.st = 'cancelled'; sDB(); }
+  cM('mDt'); lMA(); tt('התור בוטל');
+}
+
+// ========== Gallery & Notifications ==========
+function lGl() {
+  const gal = db.gal || [];
+  Q('gGr').innerHTML = gal.length ? gal.map(g => '<div class="gi" onclick="opLb(\''+g.img+'\',\''+(g.cap||'')+'\')"><img src="'+g.img+'">'+(g.cap?'<div class="cap">'+g.cap+'</div>':'')+'</div>').join('') : '<div class="emp" style="grid-column:1/-1"><i class="fas fa-images"></i><p>בקרוב ✨</p></div>';
+}
+
+function chR() { if (!me) return; uND(); }
+
+function uND() {
+  if (!me) return;
+  const unread = (db.ntf || []).filter(n => n.cid === me.id && !n.read).length;
+  Q('nD').style.display = unread ? 'block' : 'none';
+}
+
+function oN() {
+  if (!me) return;
+  const ns = (db.ntf || []).filter(n => n.cid === me.id).sort((a,b) => new Date(b.time) - new Date(a.time));
+  ns.forEach(n => n.read = 1);
+  sDB(); uND();
+  Q('nL').innerHTML = ns.length ? ns.map(n => '<div class="ni"><div class="nm">'+n.msg+'</div><div class="nt">'+tA(n.time)+'</div></div>').join('') : '<div class="emp"><i class="fas fa-bell-slash"></i><p>אין הודעות</p></div>';
+  oM('mN');
+}
+
+function tA(t) {
+  const d = (new Date() - new Date(t)) / 1000;
+  if (d < 60) return 'עכשיו';
+  if (d < 3600) return Math.floor(d/60) + ' דקות';
+  if (d < 86400) return Math.floor(d/3600) + ' שעות';
+  return Math.floor(d/86400) + ' ימים';
+}
+
+// ========== OneSignal Registration ==========
+function registerOneSignal() {
+  if (!me) return;
+  OneSignalDeferred.push(async function(OneSignal) {
+    try {
+      const permission = await OneSignal.Notifications.requestPermission();
+      if (permission) {
+        const playerId = await OneSignal.User.PushSubscription.id;
+        if (playerId) {
+          await database.ref('onesignalPlayers/' + me.id).set({ playerId: playerId, name: me.name, phone: me.phone, updated: new Date().toISOString() });
+          console.log('OneSignal registered:', playerId);
+        }
+      }
+    } catch (error) { console.log('OneSignal registration error:', error); }
+  });
+}
+
+// ========== Lightbox & Utils ==========
+function opLb(img, cap) { Q('lbI').src = img; Q('lbC').textContent = cap; Q('lb').classList.add('sh'); }
+function clLb() { Q('lb').classList.remove('sh'); }
+function oM(id) { Q(id).classList.add('sh'); }
+function cM(id) { Q(id).classList.remove('sh'); }
+function tt(m) { const t = Q('toast'); Q('tM').textContent = m; t.classList.add('sh'); setTimeout(() => t.classList.remove('sh'), 2500); }
+
+// ========== Service Worker Registration ==========
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').then(reg => { console.log('SW registered'); }).catch(err => { console.log('SW error:', err); });
+}
+</script>
+</body>
+</html>

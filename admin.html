@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Adar Sasi Nail - ניהול</title>
+<meta name="theme-color" content="#000">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="manifest" href="admin-manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-title" content="Adar ניהול">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=Cormorant+Garamond:wght@300;400;500;600;700&family=Frank+Ruhl+Libre:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+<style>
+:root{--bk:#0a0a0a;--wh:#fff;--g50:#fafafa;--g100:#f4f4f4;--g200:#e8e8e8;--g300:#d4d4d4;--g400:#a8a8a8;--g500:#777;--g600:#555;--g700:#3a3a3a;--g800:#252525;--g900:#181818;--gd:#C9A96E;--gl:#E8D5B0;--gk:#A8864A;--dn:#ef4444;--ok:#22c55e;--blu:#3b82f6;--or:#FF9800;--he:'Frank Ruhl Libre','Heebo',serif;--en:'Cormorant Garamond',serif;--f:'Heebo',sans-serif;--r:14px;--rs:10px;--s1:0 1px 6px rgba(0,0,0,.03);--s2:0 4px 16px rgba(0,0,0,.05);--hd:54px;--nv:70px}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow-x:hidden}
+body{font-family:var(--f);background:var(--wh);color:var(--g700);min-height:100vh;-webkit-font-smoothing:antialiased;font-size:12.5px;line-height:1.5}
+::-webkit-scrollbar{width:0}h1,h2,h3{font-family:var(--he);font-weight:700;color:var(--bk)}.en{font-family:var(--en);letter-spacing:2px}
+#sp{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;background:var(--bk);transition:opacity .7s,visibility .7s}#sp.h{opacity:0;visibility:hidden;pointer-events:none}
+.sp{text-align:center;animation:fU .8s ease}.sp .bsd{position:fixed;top:10px;right:14px;font-family:var(--he);font-size:10px;color:var(--gd)}
+.sp-l{width:84px;height:84px;border-radius:50%;border:1.5px solid var(--gd);margin:0 auto 18px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--g900)}.sp-l img{width:100%;height:100%;object-fit:cover}.sp-l i{font-size:30px;color:var(--gd)}
+.sp-n{font-family:var(--en);font-size:26px;color:var(--wh);font-weight:500;letter-spacing:4px}
+.sp-s{font-family:var(--en);font-size:8px;color:var(--gd);letter-spacing:7px;text-transform:uppercase;margin-top:5px}
+.sp-t{display:inline-block;margin-top:12px;padding:3px 14px;border:1px solid var(--g700);border-radius:16px;color:var(--g500);font-size:8px;letter-spacing:2px}
+.sp-b{width:50px;height:1px;background:var(--g800);margin:24px auto 0;overflow:hidden}.sp-b div{width:0;height:100%;background:var(--gd);animation:lB 1.8s ease forwards}
+@keyframes lB{to{width:100%}}
+#lo{position:fixed;inset:0;display:none;z-index:9998;overflow:hidden}#lo.sh{display:block}
+.lo-bg{position:absolute;inset:0;background:linear-gradient(158deg,var(--bk) 0%,var(--bk) 43%,var(--gd) 43%,var(--gd) 43.2%,var(--wh) 43.2%)}
+.lo-w{position:relative;z-index:1;width:100%;height:100%;display:flex;align-items:center;justify-content:center;padding:14px}
+.lo-c{width:100%;max-width:320px;animation:fU .6s ease}
+.lo-top{text-align:center;padding-bottom:24px}
+.lo-lg{width:56px;height:56px;border-radius:50%;border:1.5px solid var(--gd);margin:0 auto 10px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:rgba(255,255,255,.04)}.lo-lg img{width:100%;height:100%;object-fit:cover}.lo-lg i{font-size:18px;color:var(--gd)}
+.lo-br{font-family:var(--en);font-size:18px;color:var(--wh);font-weight:500;letter-spacing:2px}
+.lo-sb{font-size:10px;color:var(--g400);margin-top:2px;font-weight:300}
+.lo-f{background:var(--wh);border-radius:var(--r);padding:20px 16px 14px;box-shadow:0 -4px 18px rgba(0,0,0,.04);position:relative}
+.lo-f::before{content:'';position:absolute;top:-1px;left:18px;right:18px;height:2px;background:linear-gradient(90deg,var(--gl),var(--gd),var(--gl));border-radius:0 0 2px 2px}
+.lo-fh{text-align:center;margin-bottom:14px}.lo-fh h2{font-size:15px;margin-bottom:1px}.lo-fh p{font-size:10px;color:var(--g500);font-weight:300}
+.lo-i{display:flex;align-items:center;background:var(--g50);border:1.5px solid var(--g200);border-radius:var(--rs);padding:0 12px;margin-bottom:8px;transition:all .3s}
+.lo-i:focus-within{border-color:var(--gd);background:var(--wh)}
+.lo-i i{color:var(--g400);font-size:11px;margin-left:8px}.lo-i:focus-within i{color:var(--gd)}
+.lo-i input{flex:1;background:transparent;border:none;color:var(--g800);font-family:var(--f);font-size:12px;padding:11px 0;outline:none}.lo-i input::placeholder{color:var(--g400)}
+.lo-rem{display:flex;align-items:center;gap:5px;margin-bottom:12px}.lo-rem input{width:13px;height:13px;accent-color:var(--gd);cursor:pointer}.lo-rem label{color:var(--g500);font-size:10px;cursor:pointer;font-weight:300}
+.lo-btn{width:100%;border:none;border-radius:var(--rs);padding:12px;font-family:var(--f);font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;background:var(--bk);color:var(--wh);transition:all .3s}.lo-btn:hover{transform:translateY(-1px)}
+.lo-err{color:var(--dn);text-align:center;font-size:10px;margin-top:8px;display:none;background:rgba(239,68,68,.05);padding:5px 8px;border-radius:6px}
+.btn{border:none;border-radius:var(--rs);padding:10px 14px;font-family:var(--f);font-size:12px;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .3s;width:100%}
+.btn-gd{background:linear-gradient(135deg,var(--gd),var(--gk));color:var(--wh)}.btn-bk{background:var(--bk);color:var(--wh)}.btn-wh{background:var(--wh);color:var(--bk);border:1.5px solid var(--g200)}.btn-dn{background:var(--dn);color:var(--wh)}.btn-ok{background:var(--ok);color:var(--wh)}.btn-or{background:var(--or);color:var(--wh)}
+.btn-sm{padding:7px 12px;font-size:10px;width:auto}.btn-xs{padding:5px 9px;font-size:9px;width:auto}
+.bi{background:none;border:none;color:var(--g400);font-size:14px;padding:5px;cursor:pointer;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;transition:all .3s}.bi:hover{background:var(--g100);color:var(--bk)}
+.hdr{position:fixed;top:0;left:0;right:0;height:var(--hd);background:var(--bk);z-index:1000;display:flex;align-items:center}
+.hdr-in{width:100%;max-width:480px;margin:0 auto;padding:0 12px;display:flex;align-items:center;justify-content:space-between}
+.hdr-l{display:flex;align-items:center;gap:7px}
+.hdr-lg{width:26px;height:26px;border-radius:50%;border:1px solid var(--gd);display:flex;align-items:center;justify-content:center;overflow:hidden}.hdr-lg img{width:100%;height:100%;object-fit:cover}.hdr-lg i{color:var(--gd);font-size:10px}
+.hdr-nm{font-family:var(--en);font-size:12px;color:var(--wh);font-weight:500;letter-spacing:1.5px}
+.hdr-r{display:flex;gap:4px}.hdr-r .bi{color:var(--g400);font-size:12px;width:26px;height:26px}
+.nv{position:fixed;bottom:0;left:0;right:0;height:var(--nv);background:var(--wh);border-top:1px solid var(--g200);display:flex;align-items:center;justify-content:space-around;z-index:1000;padding:6px 4px;padding-bottom:calc(6px + env(safe-area-inset-bottom))}
+.nb{display:flex;flex-direction:column;align-items:center;gap:3px;background:none;border:none;color:var(--g400);font-family:var(--f);font-size:9px;padding:6px 8px;cursor:pointer;transition:all .3s;position:relative;border-radius:10px;min-width:50px}
+.nb i{font-size:18px}.nb.on{color:var(--bk);font-weight:600;background:var(--g50)}
+.nb.on::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:20px;height:2px;background:var(--gd);border-radius:0 0 3px 3px}
+.nb .dot{position:absolute;top:2px;right:2px;width:6px;height:6px;border-radius:50%;background:var(--dn);display:none}
+.bd{padding-top:var(--hd);padding-bottom:calc(var(--nv) + 40px);max-width:480px;margin:0 auto;min-height:calc(100vh - var(--hd))}
+.pg{display:none;padding:14px;padding-bottom:30px;animation:fI .2s ease}.pg.on{display:block}
+.pg-t{font-size:20px;font-weight:800;margin-bottom:2px}.pg-s{font-size:11px;color:var(--g500);margin-bottom:14px;font-weight:300}
+.sts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
+.st{background:var(--g50);border-radius:var(--r);padding:13px;display:flex;align-items:center;gap:10px;border:1px solid var(--g100)}
+.st-i{width:34px;height:34px;border-radius:9px;background:var(--bk);display:flex;align-items:center;justify-content:center;color:var(--gd);font-size:13px;flex-shrink:0}
+.st-n{font-family:var(--he);font-size:18px;font-weight:800}.st-l{font-size:8px;color:var(--g500);font-weight:300}
+.pnd{background:linear-gradient(135deg,#FFF8E7,#FFF3D6);border:1.5px solid var(--gl);border-radius:var(--r);padding:12px;margin-bottom:12px}
+.pnd h3{font-size:11px;font-weight:700;color:var(--gk);margin-bottom:6px;display:flex;align-items:center;gap:5px}.pnd h3 i{color:var(--gd)}
+.pi{background:var(--wh);border-radius:var(--rs);padding:9px;margin-bottom:5px;display:flex;align-items:center;gap:7px;box-shadow:var(--s1)}.pi:last-child{margin-bottom:0}
+.pi-i{flex:1}.pi-i .n{font-weight:600;font-size:10px}.pi-i .d{font-size:9px;color:var(--g500);font-weight:300}
+.pi-b{display:flex;gap:3px}
+.bc{background:var(--bk);border-radius:var(--r);padding:14px;margin-bottom:14px;color:var(--wh)}
+.bc h3{font-size:11px;font-weight:600;margin-bottom:8px;display:flex;align-items:center;gap:5px;color:var(--wh)}.bc h3 i{color:var(--gd)}
+.bc textarea{width:100%;padding:8px;border:1px solid var(--g700);border-radius:var(--rs);background:rgba(255,255,255,.05);color:var(--wh);font-family:var(--f);font-size:11px;resize:none;outline:none;margin-bottom:6px}.bc textarea:focus{border-color:var(--gd)}.bc textarea::placeholder{color:var(--g600)}
+.shh{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}.shh h3{font-size:13px;font-weight:700}
+.sl{background:none;border:none;color:var(--gk);font-family:var(--f);font-size:9px;cursor:pointer;display:flex;align-items:center;gap:3px}
+.ap{background:var(--wh);border-radius:var(--r);padding:10px;display:flex;align-items:center;gap:8px;margin-bottom:5px;border:1px solid var(--g100);border-right:3px solid var(--gd);cursor:pointer;transition:all .3s}
+.ap:hover{transform:translateX(-2px);box-shadow:var(--s2)}.ap.cn{opacity:.4;border-right-color:var(--dn)}.ap.pn{border-right-color:var(--gl)}
+.ap-t{text-align:center;min-width:38px}.ap-t .t{font-family:var(--he);font-size:14px;font-weight:800}.ap-t .d{font-size:7px;color:var(--g400)}
+.ap-s{width:1px;height:24px;background:var(--g200)}
+.ap-i{flex:1}.ap-i .n{font-weight:600;font-size:11px}.ap-i .v{font-size:9px;color:var(--g500)}
+.ap-p{font-family:var(--he);font-weight:800;font-size:12px;color:var(--gk)}
+.bg{display:inline-block;padding:2px 6px;border-radius:10px;font-size:7px;font-weight:500}.bg-ok{background:#dcfce7;color:#166534}.bg-no{background:#fef2f2;color:#991b1b}.bg-wt{background:#FEF3C7;color:#92400E}
+.mp{background:var(--wh);border-radius:var(--r);padding:12px;border:1px solid var(--g100);margin-bottom:8px}.mn{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:8px}.ml{font-size:12px;font-weight:700;min-width:100px;text-align:center}
+.mg{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}.mh{text-align:center;font-size:8px;font-weight:600;color:var(--gd);padding:3px 0}
+.mc{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:50%;font-size:11px;font-weight:500;cursor:pointer;transition:all .2s;position:relative;font-family:var(--he)}.mc:hover{background:var(--g50)}.mc.av{font-weight:700;color:var(--bk)}.mc.off{color:var(--g300);cursor:default}.mc.sel{background:var(--bk);color:var(--wh)}.mc.td{border:1.5px solid var(--gd);font-weight:700}.mc.blk{background:#ffebee;border:1px solid #ef5350}
+.slot-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:3px;max-height:280px;overflow-y:auto}
+.slot-item{padding:6px 2px;border-radius:5px;text-align:center;font-size:9px;font-weight:600;cursor:pointer;transition:all .2s}
+.slot-item.open{background:#4CAF50;color:#fff}
+.slot-item.closed{background:#ef4444;color:#fff}
+.slot-item.booked{background:#9C27B0;color:#fff;cursor:pointer}
+.quick-btns{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}.quick-btns .btn{flex:1;min-width:60px}
+.time-tabs{display:flex;background:var(--g100);border-radius:var(--rs);padding:3px;margin-bottom:10px}
+.time-tab{flex:1;padding:8px 4px;border:none;background:transparent;font-family:var(--f);font-size:10px;font-weight:500;color:var(--g500);border-radius:7px;cursor:pointer;transition:all .3s}
+.time-tab.on{background:var(--wh);color:var(--bk);box-shadow:var(--s1)}
+.md{position:fixed;inset:0;z-index:5000;display:none;align-items:flex-end;justify-content:center}.md.sh{display:flex}
+.md-bg{position:absolute;inset:0;background:rgba(0,0,0,.45);animation:fI .15s;backdrop-filter:blur(2px)}
+.md-bx{position:relative;background:var(--wh);border-radius:var(--r) var(--r) 0 0;width:100%;max-width:400px;max-height:82vh;overflow-y:auto;animation:sU .25s ease}
+.md-tp{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid var(--g100);position:sticky;top:0;background:var(--wh);z-index:1}.md-tp h3{font-size:13px;font-weight:700}
+.md-bd{padding:14px}.md-ft{padding:10px 14px;border-top:1px solid var(--g100);display:flex;gap:5px;justify-content:flex-end;position:sticky;bottom:0;background:var(--wh)}
+.dt{display:flex;align-items:center;gap:7px;padding:7px 0;border-bottom:1px solid var(--g100)}.dt:last-child{border-bottom:none}.dt i{width:12px;text-align:center;color:var(--gk);font-size:10px}.dt .dl{font-size:9px;color:var(--g500);min-width:40px}.dt .dv{font-weight:600;font-size:11px}
+.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:var(--bk);color:var(--wh);padding:8px 14px;border-radius:18px;display:none;align-items:center;gap:5px;font-size:10px;z-index:9000;box-shadow:var(--s2)}.toast.sh{display:flex;animation:fU .25s ease}.toast i{color:var(--ok)}
+.emp{text-align:center;padding:24px 10px;color:var(--g400)}.emp i{font-size:24px;margin-bottom:6px;display:block}.emp p{font-size:11px}
+.se{background:var(--wh);border-radius:var(--r);padding:16px;margin-bottom:10px;border:1px solid var(--g100)}
+.se h3{font-size:12px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:5px}.se h3 i{color:var(--gk);font-size:11px}
+.fg{margin-bottom:10px}.fg label{display:block;font-size:9px;font-weight:500;color:var(--g600);margin-bottom:3px}
+.fi{width:100%;padding:9px 10px;border:1.5px solid var(--g200);border-radius:var(--rs);font-family:var(--f);font-size:11px;outline:none;transition:border-color .3s;background:var(--wh);color:var(--g800)}.fi:focus{border-color:var(--bk)}
+.sv{background:var(--wh);border-radius:var(--r);padding:10px;display:flex;align-items:center;gap:8px;margin-bottom:5px;border:1px solid var(--g100)}
+.sv-c{width:3px;height:32px;border-radius:2px;flex-shrink:0}
+.sv-i{flex:1;min-width:0}.sv-i .n{font-weight:600;font-size:11px}.sv-i .m{font-size:9px;color:var(--g500)}
+.sv-a{display:flex;gap:1px;flex-shrink:0}.sv-a .bi{font-size:11px;width:24px;height:24px}
+.gl{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-bottom:8px}
+.gi{position:relative;border-radius:var(--rs);overflow:hidden;aspect-ratio:1}.gi img{width:100%;height:100%;object-fit:cover}
+.gx{position:absolute;top:2px;left:2px;width:18px;height:18px;background:rgba(0,0,0,.5);color:var(--wh);border:none;border-radius:50%;font-size:7px;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .3s}.gi:hover .gx{opacity:1}
+.lu{width:60px;height:60px;border-radius:50%;border:1.5px dashed var(--g300);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;overflow:hidden;color:var(--g400);gap:2px}.lu:hover{border-color:var(--gd);color:var(--gd)}.lu img{width:100%;height:100%;object-fit:cover}.lu i{font-size:14px}.lu span{font-size:6px}
+.iu{width:100%;height:80px;border:1.5px dashed var(--g300);border-radius:var(--rs);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;overflow:hidden;color:var(--g400);gap:3px}.iu:hover{border-color:var(--gd)}.iu img{width:100%;height:100%;object-fit:cover}.iu i{font-size:16px}.iu span{font-size:9px}
+.tg{position:relative;display:inline-block;width:36px;height:20px}.tg input{opacity:0;width:0;height:0}.tg-t{position:absolute;cursor:pointer;inset:0;background:var(--g300);border-radius:20px;transition:.3s}.tg-t::before{content:'';position:absolute;height:14px;width:14px;right:3px;bottom:3px;background:var(--wh);border-radius:50%;transition:.3s}.tg input:checked+.tg-t{background:var(--bk)}.tg input:checked+.tg-t::before{transform:translateX(-16px)}
+.bt{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}.btg{display:flex;align-items:center;gap:3px;background:var(--g50);border:1px solid var(--g100);padding:2px 8px;border-radius:12px;font-size:9px}.btg button{background:none;border:none;color:var(--dn);cursor:pointer;font-size:8px}
+.client-search{position:relative}
+.client-dropdown{position:absolute;top:100%;left:0;right:0;background:var(--wh);border:1.5px solid var(--g200);border-radius:var(--rs);max-height:180px;overflow-y:auto;z-index:100;display:none;box-shadow:var(--s2)}
+.client-dropdown.show{display:block}
+.client-item{padding:10px 12px;cursor:pointer;border-bottom:1px solid var(--g100);display:flex;justify-content:space-between;align-items:center;transition:background .2s}
+.client-item:hover{background:var(--g50)}
+.client-item:last-child{border-bottom:none}
+.client-item .cl-name{font-weight:600;font-size:11px}
+.client-item .cl-phone{color:var(--g500);font-size:10px;direction:ltr}
+.selected-client{background:linear-gradient(135deg,#E8F5E9,#C8E6C9);border:1.5px solid #81C784;border-radius:var(--rs);padding:10px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}
+.selected-client .sc-info{flex:1}
+.selected-client .sc-name{font-weight:700;font-size:12px;color:#2E7D32}
+.selected-client .sc-phone{font-size:10px;color:#558B2F;direction:ltr}
+.selected-client .sc-clear{background:none;border:none;color:#C62828;font-size:14px;cursor:pointer;padding:5px}
+.wl-card{background:var(--wh);border-radius:var(--r);padding:12px;margin-bottom:10px;border:1px solid var(--g100);border-right:3px solid var(--or)}
+.wl-badge{background:var(--or);color:#fff;padding:2px 8px;border-radius:10px;font-size:8px;font-weight:600}
+.cd{flex-shrink:0;width:44px;padding:8px 4px;background:var(--g50);border-radius:var(--rs);text-align:center;cursor:pointer;border:1px solid var(--g100);transition:all .2s}
+.cd:hover{background:var(--g100)}
+.cd.on{background:var(--bk);color:var(--wh);border-color:var(--bk)}
+.cd.td{border-color:var(--gd)}
+.cd .dn{font-size:9px;font-weight:600;color:var(--g500);margin-bottom:2px}
+.cd .dd{font-family:var(--he);font-size:16px;font-weight:800}
+.cd .dc{font-size:8px;color:var(--g400)}
+.cd.on .dn,.cd.on .dd,.cd.on .dc{color:var(--wh)}
+.price-pending{background:linear-gradient(135deg,#FFF3E0,#FFE0B2);border:1.5px solid #FFB74D;border-radius:var(--rs);padding:8px;margin-top:8px;text-align:center}
+.price-pending i{color:#F57C00;margin-left:4px}
+.price-pending span{font-size:10px;color:#E65100;font-weight:600}
+@keyframes fI{from{opacity:0}to{opacity:1}}@keyframes fU{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}@keyframes sU{from{transform:translateY(100%)}to{transform:translateY(0)}}
+@media(max-width:360px){.sts{grid-template-columns:1fr}.slot-grid{grid-template-columns:repeat(4,1fr)}.nb{padding:5px 6px;min-width:45px}.nb i{font-size:16px}.nb{font-size:8px}}
+</style>
+</head>
+<body>
+<div id="sp"><div class="sp"><div class="bsd">בס״ד</div><div class="sp-l" id="spL"><i class="fas fa-gem"></i></div><div class="sp-n en">Adar Sasi Nail</div><div class="sp-s en">Beauty & Nail Art</div><div class="sp-t">פאנל ניהול</div><div class="sp-b"><div></div></div></div></div>
+<div id="lo"><div class="lo-bg"></div><div class="lo-w"><div class="lo-c"><div class="lo-top"><div class="lo-lg" id="logL"><i class="fas fa-gem"></i></div><div class="lo-br en">Adar Sasi Nail</div><div class="lo-sb">ניהול העסק שלך</div></div><div class="lo-f"><div class="lo-fh"><h2>התחברות</h2><p>הכניסי את הפרטים</p></div><div class="lo-i"><i class="fas fa-user"></i><input type="text" id="iu" placeholder="שם משתמש"></div><div class="lo-i"><i class="fas fa-lock"></i><input type="password" id="ip" placeholder="סיסמה"></div><div class="lo-rem"><input type="checkbox" id="rem" checked><label for="rem">זכרי אותי</label></div><button class="lo-btn" onclick="doLog()"><span>כניסה</span><i class="fas fa-arrow-left"></i></button><div class="lo-err" id="logE"><i class="fas fa-exclamation-circle"></i> שגויים</div></div></div></div></div>
+
+<div id="app" style="display:none">
+<header class="hdr"><div class="hdr-in"><div class="hdr-l"><div class="hdr-lg" id="hL"><i class="fas fa-gem"></i></div><span class="hdr-nm en">Adar Sasi Nail</span></div><div class="hdr-r"><button class="bi" onclick="doOut()"><i class="fas fa-sign-out-alt"></i></button></div></div></header>
+
+<nav class="nv">
+<button class="nb on" data-p="d"><i class="fas fa-home"></i><span>ראשי</span><span class="dot" id="pD"></span></button>
+<button class="nb" data-p="w"><i class="fas fa-hourglass-half"></i><span>המתנה</span><span class="dot" id="wD"></span></button>
+<button class="nb" data-p="t"><i class="fas fa-clock"></i><span>זמנים</span></button>
+<button class="nb" data-p="c"><i class="fas fa-calendar-alt"></i><span>יומן</span></button>
+<button class="nb" data-p="s"><i class="fas fa-gem"></i><span>שירותים</span></button>
+<button class="nb" data-p="e"><i class="fas fa-cog"></i><span>הגדרות</span></button>
+</nav>
+
+<div class="bd">
+<!-- דף ראשי -->
+<div class="pg on" id="pgD">
+<h1 class="pg-t">שלום, אדר ✨</h1>
+<p class="pg-s" id="tdy"></p>
+<div class="sts">
+<div class="st"><div class="st-i"><i class="fas fa-calendar-day"></i></div><div><div class="st-n" id="z1">0</div><div class="st-l">היום</div></div></div>
+<div class="st"><div class="st-i"><i class="fas fa-calendar-check"></i></div><div><div class="st-n" id="z2">0</div><div class="st-l">עתידיים</div></div></div>
+<div class="st"><div class="st-i"><i class="fas fa-shekel-sign"></i></div><div><div class="st-n" id="z3">0₪</div><div class="st-l">הכנסות החודש</div></div></div>
+<div class="st"><div class="st-i"><i class="fas fa-users"></i></div><div><div class="st-n" id="z4">0</div><div class="st-l">לקוחות</div></div></div>
+</div>
+<div class="pnd" id="pB" style="display:none"><h3><i class="fas fa-clock"></i> ממתינים לאישור</h3><div id="pL"></div></div>
+<div class="bc"><h3><i class="fas fa-bullhorn"></i> הודעה לכולן</h3><textarea id="bcM" rows="2" placeholder="כתבי הודעה..."></textarea><button class="btn btn-gd btn-sm" onclick="sBC()"><i class="fas fa-paper-plane"></i> שלחי</button></div>
+<div class="shh"><h3>תורים להיום</h3><button class="sl" onclick="goP('c')">הכל <i class="fas fa-arrow-left"></i></button></div>
+<div id="dA"></div>
+<button class="btn btn-bk" style="margin-top:10px;margin-bottom:20px" onclick="oAM()"><i class="fas fa-plus"></i> תור חדש</button>
+</div>
+
+<!-- דף רשימת המתנה -->
+<div class="pg" id="pgW">
+<h1 class="pg-t">⏰ רשימת המתנה</h1>
+<p class="pg-s">לחצי על תאריך לצפייה בבקשות</p>
+<div style="background:linear-gradient(135deg,#FFF8E7,#FFF3D6);border:1.5px solid var(--gl);border-radius:var(--r);padding:14px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between">
+<div><h4 style="font-size:12px;font-weight:700;color:var(--gk);margin-bottom:2px"><i class="fas fa-hourglass-half"></i> סה״כ בקשות</h4><p style="font-size:10px;color:var(--g600)" id="wlTotalCount">0 בקשות ממתינות</p></div>
+<div style="background:var(--or);color:#fff;min-width:24px;height:24px;border-radius:50%;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center" id="wlTotalBadge">0</div>
+</div>
+<div class="mp">
+<div class="mn"><button class="bi" onclick="wlChMo(-1)"><i class="fas fa-chevron-right"></i></button><span class="ml" id="wlMoL"></span><button class="bi" onclick="wlChMo(1)"><i class="fas fa-chevron-left"></i></button></div>
+<div class="mg" id="wlMoCal"></div>
+</div>
+<div style="background:var(--wh);border-radius:var(--r);padding:12px;border:1px solid var(--g100)">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+<h3 style="font-size:12px;display:flex;align-items:center;gap:5px"><i class="fas fa-calendar" style="color:var(--gd)"></i><span id="wlDateTitle">בחרי תאריך</span></h3>
+<span class="wl-badge" id="wlDateCount" style="display:none">0</span>
+</div>
+<div id="wlDateList" style="max-height:350px;overflow-y:auto;padding-bottom:20px"></div>
+</div>
+</div>
+
+<!-- דף ניהול זמנים -->
+<div class="pg" id="pgT">
+<h1 class="pg-t">⏰ ניהול זמנים</h1>
+<p class="pg-s">שעות 07:00-22:00 כל 5 דקות</p>
+<div style="background:#E8F5E9;border:1.5px solid #81C784;border-radius:var(--r);padding:10px;margin-bottom:12px">
+<div style="display:flex;align-items:center;gap:6px;margin-bottom:4px"><i class="fas fa-info-circle" style="color:#388E3C"></i><strong style="font-size:11px;color:#2E7D32">מקרא</strong></div>
+<p style="font-size:9px;color:#558B2F">🔴 סגור • 🟢 פתוח • 🔵 תפוס (לחצי לפתוח מחדש)</p>
+</div>
+<div class="mp" style="margin-bottom:12px">
+<div class="mn"><button class="bi" onclick="tmChMo(-1)"><i class="fas fa-chevron-right"></i></button><span class="ml" id="tmMoL"></span><button class="bi" onclick="tmChMo(1)"><i class="fas fa-chevron-left"></i></button></div>
+<div class="mg" id="tmMoCal"></div>
+</div>
+<div id="tmDayPanel" style="background:var(--wh);border-radius:var(--r);padding:12px;margin-bottom:10px;border:1px solid var(--g100)">
+<h3 style="font-size:12px;margin-bottom:10px;display:flex;align-items:center;gap:5px"><i class="fas fa-clock" style="color:var(--gd)"></i><span id="tmDayTitle">בחרי תאריך</span></h3>
+<div class="quick-btns" id="tmQuickBtns" style="display:none"><button class="btn btn-xs btn-ok" onclick="tmOpenRange()"><i class="fas fa-lock-open"></i> פתח טווח</button><button class="btn btn-xs btn-dn" onclick="tmCloseAll()"><i class="fas fa-lock"></i> סגור</button><button class="btn btn-xs btn-wh" onclick="tmSaveDay()"><i class="fas fa-save"></i> שמור</button></div>
+<div class="time-tabs" id="timeTabs" style="display:none"><button class="time-tab on" onclick="setTimeTab('morning')"><i class="fas fa-sun"></i> בוקר</button><button class="time-tab" onclick="setTimeTab('noon')"><i class="fas fa-cloud-sun"></i> צהריים</button><button class="time-tab" onclick="setTimeTab('evening')"><i class="fas fa-moon"></i> ערב</button></div>
+<div id="tmSlotGrid" class="slot-grid"></div>
+</div>
+<div class="se"><h3><i class="fas fa-calendar-times"></i> חסימת ימים</h3><div class="fg"><label>תאריך</label><div style="display:flex;align-items:center;gap:6px;direction:ltr"><input type="text" class="fi" style="width:55px;text-align:center" id="bID" placeholder="DD" maxlength="2"><span style="color:var(--g400);font-weight:500">/</span><input type="text" class="fi" style="width:55px;text-align:center" id="bIM" placeholder="MM" maxlength="2"><span style="color:var(--g400);font-weight:500">/</span><input type="text" class="fi" style="width:70px;text-align:center" id="bIY" placeholder="YYYY" maxlength="4"></div><button class="btn btn-wh btn-xs" onclick="bD()" style="margin-top:8px"><i class="fas fa-lock"></i> חסום</button></div><div class="bt" id="bL"></div></div>
+</div>
+
+<!-- דף יומן -->
+<div class="pg" id="pgC">
+<h1 class="pg-t">יומן</h1>
+<p class="pg-s">תורים לפי ימים</p>
+<div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:10px"><button class="bi" onclick="mW(-1)"><i class="fas fa-chevron-right"></i></button><span id="wL" style="font-weight:600;font-size:12px;min-width:130px;text-align:center"></span><button class="bi" onclick="mW(1)"><i class="fas fa-chevron-left"></i></button></div>
+<div id="cD" style="display:flex;gap:3px;overflow-x:auto;margin-bottom:10px;padding:1px 0"></div>
+<div id="cA"></div>
+<button class="btn btn-bk" style="margin-top:10px;margin-bottom:20px" onclick="oAM()"><i class="fas fa-plus"></i> תור</button>
+</div>
+
+<!-- דף שירותים -->
+<div class="pg" id="pgS">
+<h1 class="pg-t">שירותים</h1>
+<p class="pg-s">טיפולים ומחירים</p>
+<div id="sL"></div>
+<button class="btn btn-bk" style="margin-top:8px" onclick="oSM()"><i class="fas fa-plus"></i> שירות חדש</button>
+<h3 style="font-size:12px;margin-top:20px;margin-bottom:8px">גלריה</h3>
+<div id="gG" class="gl"></div>
+<button class="btn btn-wh" style="margin-top:4px;margin-bottom:20px" onclick="oGM()"><i class="fas fa-image"></i> תמונה</button>
+</div>
+
+<!-- דף הגדרות -->
+<div class="pg" id="pgE">
+<h1 class="pg-t">הגדרות</h1>
+<p class="pg-s">התאמה אישית</p>
+<div class="se"><h3><i class="fas fa-store"></i> פרטי העסק</h3><div class="fg"><label>שם</label><input type="text" class="fi" id="sN"></div><div class="fg"><label>טלפון</label><input type="tel" class="fi" id="sP"></div><div class="fg"><label>לוגו</label><div class="lu" id="lP" onclick="Q('lF').click()"><i class="fas fa-camera"></i><span>העלאה</span></div><input type="file" id="lF" accept="image/*" hidden onchange="hLo(event)"></div><button class="btn btn-bk btn-sm" onclick="sBz()"><i class="fas fa-check"></i> שמירה</button></div>
+<div class="se"><h3><i class="fas fa-share-alt"></i> רשתות חברתיות</h3><div class="fg"><label>אינסטגרם</label><input type="text" class="fi" id="sIG" placeholder="https://instagram.com/"></div><div class="fg"><label>טיקטוק</label><input type="text" class="fi" id="sTT" placeholder="https://tiktok.com/@"></div><div class="fg"><label>פייסבוק</label><input type="text" class="fi" id="sFB" placeholder="https://facebook.com/"></div><button class="btn btn-bk btn-sm" onclick="sSoc()"><i class="fas fa-check"></i> שמירה</button></div>
+<div class="se"><h3><i class="fas fa-key"></i> סיסמה</h3><div class="fg"><label>נוכחית</label><input type="password" class="fi" id="oP"></div><div class="fg"><label>חדשה</label><input type="password" class="fi" id="nP"></div><div class="fg"><label>אימות</label><input type="password" class="fi" id="nP2"></div><button class="btn btn-bk btn-sm" onclick="chP()"><i class="fas fa-key"></i> שנה</button></div>
+<button class="btn btn-wh" onclick="doOut()" style="margin-top:6px;margin-bottom:30px;color:var(--dn);border-color:var(--dn);font-size:10px"><i class="fas fa-sign-out-alt"></i> התנתקות</button>
+</div>
+</div>
+</div>
+
+<!-- מודלים -->
+<div class="md" id="mS"><div class="md-bg" onclick="cM('mS')"></div><div class="md-bx"><div class="md-tp"><h3 id="mST">שירות</h3><button class="bi" onclick="cM('mS')"><i class="fas fa-times"></i></button></div><div class="md-bd"><input type="hidden" id="eSi"><div class="fg"><label>שם</label><input type="text" class="fi" id="iSn"></div><div class="fg"><label>דקות</label><input type="number" class="fi" id="iSd" min="15" step="15"></div><div class="fg"><label>מחיר</label><input type="number" class="fi" id="iSp" min="0"></div><div class="fg"><label>צבע</label><input type="color" class="fi" id="iSc" value="#C9A96E" style="height:32px;padding:2px;cursor:pointer"></div><div class="fg"><label>תמונה</label><div class="iu" id="sIP" onclick="Q('sIF').click()"><i class="fas fa-image"></i><span>העלאה</span></div><input type="file" id="sIF" accept="image/*" hidden onchange="hIm(event,'sIP')"></div></div><div class="md-ft"><button class="btn btn-wh btn-sm" onclick="cM('mS')">ביטול</button><button class="btn btn-bk btn-sm" onclick="sSv()">שמירה</button></div></div></div>
+
+<div class="md" id="mA"><div class="md-bg" onclick="cM('mA')"></div><div class="md-bx"><div class="md-tp"><h3>תור חדש</h3><button class="bi" onclick="cM('mA')"><i class="fas fa-times"></i></button></div><div class="md-bd">
+<div id="selectedClientBox" class="selected-client" style="display:none"><div class="sc-info"><div class="sc-name" id="scName"></div><div class="sc-phone" id="scPhone"></div></div><button class="sc-clear" onclick="clearSelectedClient()"><i class="fas fa-times"></i></button></div>
+<div id="clientSelectBox"><div class="fg client-search"><label>לקוחה</label><input type="text" class="fi" id="iAn" placeholder="שם לקוחה..." oninput="searchClients()" onfocus="showClientDropdown()"><div class="client-dropdown" id="clientDropdown"></div></div><div class="fg"><label>טלפון</label><input type="tel" class="fi" id="iAp" placeholder="טלפון"></div></div>
+<div class="fg"><label>שירות</label><select class="fi" id="iAs"></select></div>
+<div class="fg"><label>תאריך</label><div style="display:flex;align-items:center;gap:6px;direction:ltr"><input type="text" class="fi" style="width:55px;text-align:center" id="iAdD" placeholder="DD" maxlength="2"><span style="color:var(--g400)">/</span><input type="text" class="fi" style="width:55px;text-align:center" id="iAdM" placeholder="MM" maxlength="2"><span style="color:var(--g400)">/</span><input type="text" class="fi" style="width:70px;text-align:center" id="iAdY" placeholder="YYYY" maxlength="4"></div></div>
+<div class="fg"><label>שעה</label><div style="display:flex;align-items:center;justify-content:center;gap:8px;direction:ltr"><div style="display:flex;flex-direction:column;align-items:center;gap:4px"><button style="width:32px;height:32px;border:1.5px solid var(--g200);border-radius:8px;background:var(--wh);cursor:pointer" onclick="chTime('iAtH',1)"><i class="fas fa-chevron-up"></i></button><input type="text" style="width:50px;height:40px;border:1.5px solid var(--g200);border-radius:var(--rs);text-align:center;font-size:18px;font-weight:700" id="iAtH" value="10" maxlength="2"><button style="width:32px;height:32px;border:1.5px solid var(--g200);border-radius:8px;background:var(--wh);cursor:pointer" onclick="chTime('iAtH',-1)"><i class="fas fa-chevron-down"></i></button></div><span style="font-size:24px;font-weight:700;color:var(--g400)">:</span><div style="display:flex;flex-direction:column;align-items:center;gap:4px"><button style="width:32px;height:32px;border:1.5px solid var(--g200);border-radius:8px;background:var(--wh);cursor:pointer" onclick="chTime('iAtM',1)"><i class="fas fa-chevron-up"></i></button><input type="text" style="width:50px;height:40px;border:1.5px solid var(--g200);border-radius:var(--rs);text-align:center;font-size:18px;font-weight:700" id="iAtM" value="00" maxlength="2"><button style="width:32px;height:32px;border:1.5px solid var(--g200);border-radius:8px;background:var(--wh);cursor:pointer" onclick="chTime('iAtM',-1)"><i class="fas fa-chevron-down"></i></button></div></div></div>
+<div class="fg"><label>הערות</label><textarea class="fi" id="iAnt" rows="2"></textarea></div>
+</div><div class="md-ft"><button class="btn btn-wh btn-sm" onclick="cM('mA')">ביטול</button><button class="btn btn-bk btn-sm" onclick="sAp()">קבעי</button></div></div></div>
+
+<div class="md" id="mG"><div class="md-bg" onclick="cM('mG')"></div><div class="md-bx"><div class="md-tp"><h3>תמונה</h3><button class="bi" onclick="cM('mG')"><i class="fas fa-times"></i></button></div><div class="md-bd"><div class="fg"><label>תיאור</label><input type="text" class="fi" id="iGc"></div><div class="fg"><div class="iu" id="gIP" onclick="Q('gIF').click()"><i class="fas fa-image"></i><span>העלאה</span></div><input type="file" id="gIF" accept="image/*" hidden onchange="hIm(event,'gIP')"></div></div><div class="md-ft"><button class="btn btn-wh btn-sm" onclick="cM('mG')">ביטול</button><button class="btn btn-bk btn-sm" onclick="sGl()">הוספה</button></div></div></div>
+
+<div class="md" id="mDt"><div class="md-bg" onclick="cM('mDt')"></div><div class="md-bx"><div class="md-tp"><h3>פרטי תור</h3><button class="bi" onclick="cM('mDt')"><i class="fas fa-times"></i></button></div><div class="md-bd" id="dB"></div><div class="md-ft" id="dF"></div></div></div>
+
+<div class="md" id="mEd"><div class="md-bg" onclick="cM('mEd')"></div><div class="md-bx"><div class="md-tp"><h3>✏️ עריכת תור</h3><button class="bi" onclick="cM('mEd')"><i class="fas fa-times"></i></button></div><div class="md-bd"><input type="hidden" id="edId">
+<div class="fg"><label>לקוחה</label><input type="text" class="fi" id="edNm" readonly style="background:var(--g50);color:var(--g500)"></div>
+<div class="fg"><label>שירות</label><select class="fi" id="edSv"></select></div>
+<div class="fg"><label>תאריך</label><div style="display:flex;align-items:center;gap:6px;direction:ltr"><input type="text" class="fi" style="width:55px;text-align:center" id="edDtD" maxlength="2"><span style="color:var(--g400)">/</span><input type="text" class="fi" style="width:55px;text-align:center" id="edDtM" maxlength="2"><span style="color:var(--g400)">/</span><input type="text" class="fi" style="width:70px;text-align:center" id="edDtY" maxlength="4"></div></div>
+<div class="fg"><label>שעה</label><div style="display:flex;align-items:center;justify-content:center;gap:8px;direction:ltr"><div style="display:flex;flex-direction:column;align-items:center;gap:4px"><button style="width:32px;height:32px;border:1.5px solid var(--g200);border-radius:8px;background:var(--wh);cursor:pointer" onclick="chTime('edTiH',1)"><i class="fas fa-chevron-up"></i></button><input type="text" style="width:50px;height:40px;border:1.5px solid var(--g200);border-radius:var(--rs);text-align:center;font-size:18px;font-weight:700" id="edTiH" value="10" maxlength="2"><button style="width:32px;height:32px;border:1.5px solid var(--g200);border-radius:8px;background:var(--wh);cursor:pointer" onclick="chTime('edTiH',-1)"><i class="fas fa-chevron-down"></i></button></div><span style="font-size:24px;font-weight:700;color:var(--g400)">:</span><div style="display:flex;flex-direction:column;align-items:center;gap:4px"><button style="width:32px;height:32px;border:1.5px solid var(--g200);border-radius:8px;background:var(--wh);cursor:pointer" onclick="chTime('edTiM',1)"><i class="fas fa-chevron-up"></i></button><input type="text" style="width:50px;height:40px;border:1.5px solid var(--g200);border-radius:var(--rs);text-align:center;font-size:18px;font-weight:700" id="edTiM" value="00" maxlength="2"><button style="width:32px;height:32px;border:1.5px solid var(--g200);border-radius:8px;background:var(--wh);cursor:pointer" onclick="chTime('edTiM',-1)"><i class="fas fa-chevron-down"></i></button></div></div></div>
+<div class="fg"><label>מחיר</label><input type="number" class="fi" id="edPr" min="0"></div>
+<div class="fg"><label>הערות</label><textarea class="fi" id="edNt" rows="2"></textarea></div>
+</div><div class="md-ft"><button class="btn btn-wh btn-sm" onclick="cM('mEd')">ביטול</button><button class="btn btn-bk btn-sm" onclick="svEd()"><i class="fas fa-check"></i> שמירה</button></div></div></div>
+
+<div class="md" id="mWL"><div class="md-bg" onclick="cM('mWL')"></div><div class="md-bx">
+<div class="md-tp"><h3>✅ קביעת תור</h3><button class="bi" onclick="cM('mWL')"><i class="fas fa-times"></i></button></div>
+<div class="md-bd">
+<input type="hidden" id="wlApproveId">
+<div style="background:var(--g50);padding:12px;border-radius:var(--r);margin-bottom:12px">
+<div style="font-weight:700;font-size:13px;margin-bottom:4px" id="wlApproveName"></div>
+<div style="font-size:11px;color:var(--g600)" id="wlApproveSvc"></div>
+<div style="font-size:10px;color:var(--g500);margin-top:4px">הלקוחה ביקשה:</div>
+<div style="font-size:10px;color:var(--gk);margin-top:2px" id="wlApproveOriginal"></div>
+</div>
+<div class="fg"><label>שירות</label><select class="fi" id="wlApproveSvcSelect"></select></div>
+<div class="fg"><label>תאריך</label><div style="display:flex;align-items:center;gap:6px;direction:ltr"><input type="text" class="fi" style="width:55px;text-align:center" id="wlDtD" placeholder="DD" maxlength="2"><span style="color:var(--g400)">/</span><input type="text" class="fi" style="width:55px;text-align:center" id="wlDtM" placeholder="MM" maxlength="2"><span style="color:var(--g400)">/</span><input type="text" class="fi" style="width:70px;text-align:center" id="wlDtY" placeholder="YYYY" maxlength="4"></div></div>
+<div class="fg"><label>שעה</label><div style="display:flex;align-items:center;justify-content:center;gap:8px;direction:ltr"><div style="display:flex;flex-direction:column;align-items:center;gap:4px"><button style="width:32px;height:32px;border:1.5px solid var(--g200);border-radius:8px;background:var(--wh);cursor:pointer" onclick="chTime('wlTiH',1)"><i class="fas fa-chevron-up"></i></button><input type="text" style="width:50px;height:40px;border:1.5px solid var(--g200);border-radius:var(--rs);text-align:center;font-size:18px;font-weight:700" id="wlTiH" value="10" maxlength="2"><button style="width:32px;height:32px;border:1.5px solid var(--g200);border-radius:8px;background:var(--wh);cursor:pointer" onclick="chTime('wlTiH',-1)"><i class="fas fa-chevron-down"></i></button></div><span style="font-size:24px;font-weight:700;color:var(--g400)">:</span><div style="display:flex;flex-direction:column;align-items:center;gap:4px"><button style="width:32px;height:32px;border:1.5px solid var(--g200);border-radius:8px;background:var(--wh);cursor:pointer" onclick="chTime('wlTiM',1)"><i class="fas fa-chevron-up"></i></button><input type="text" style="width:50px;height:40px;border:1.5px solid var(--g200);border-radius:var(--rs);text-align:center;font-size:18px;font-weight:700" id="wlTiM" value="00" maxlength="2"><button style="width:32px;height:32px;border:1.5px solid var(--g200);border-radius:8px;background:var(--wh);cursor:pointer" onclick="chTime('wlTiM',-1)"><i class="fas fa-chevron-down"></i></button></div></div></div>
+<div class="fg"><label>מחיר</label><input type="number" class="fi" id="wlPrice" min="0"></div>
+<div class="fg"><label>הערות ללקוחה</label><textarea class="fi" id="wlApproveNotes" rows="2" placeholder="הודעה ללקוחה..."></textarea></div>
+</div>
+<div class="md-ft"><button class="btn btn-wh btn-sm" onclick="cM('mWL')">ביטול</button><button class="btn btn-ok btn-sm" onclick="confirmWLApprove()"><i class="fas fa-check"></i> קבעי תור</button></div>
+</div></div>
+
+<div class="toast" id="toast"><i class="fas fa-check-circle"></i><span id="tM"></span></div>
+<script>
+const firebaseConfig={apiKey:"AIzaSyDSJoLMkPO0dbZx1x6uixITgzZnx1jEqVc",authDomain:"adarsasinail.firebaseapp.com",databaseURL:"https://adarsasinail-default-rtdb.firebaseio.com",projectId:"adarsasinail",storageBucket:"adarsasinail.firebasestorage.app",messagingSenderId:"993038338881",appId:"1:993038338881:web:b5ea1415981c2759b6fc0"};
+firebase.initializeApp(firebaseConfig);
+const database=firebase.database();
+
+// ========== OneSignal Push Notifications ==========
+const ONESIGNAL_APP_ID = '33467390-aa9d-4884-bdfa-6c1f96a85227';
+const ONESIGNAL_API_KEY = 'os_v2_app_gndhhefktveijpp2nqpznkcse76yu5xlyvoern5s7o6cs4w35oe7ytikybwijd3eyfhr7nml7a3g6t6rxz7yit6qcew323ugefbwhxa';
+
+async function sendPushToClient(clientId, title, body) {
+  try {
+    const tokenSnapshot = await database.ref('onesignalPlayers/' + clientId).once('value');
+    const playerData = tokenSnapshot.val();
+    if (playerData && playerData.playerId) {
+      await fetch('https://onesignal.com/api/v1/notifications', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json', 'Authorization': 'Basic ' + ONESIGNAL_API_KEY},
+        body: JSON.stringify({
+          app_id: ONESIGNAL_APP_ID,
+          include_player_ids: [playerData.playerId],
+          headings: { he: title, en: title },
+          contents: { he: body, en: body },
+          small_icon: 'icon-192',
+          chrome_web_icon: 'icon-192.png'
+        })
+      });
+    }
+  } catch (error) { console.error('OneSignal send error:', error); }
+}
+
+async function sendPushToAll(title, body) {
+  try {
+    await fetch('https://onesignal.com/api/v1/notifications', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json', 'Authorization': 'Basic ' + ONESIGNAL_API_KEY},
+      body: JSON.stringify({
+        app_id: ONESIGNAL_APP_ID,
+        included_segments: ['All'],
+        headings: { he: title, en: title },
+        contents: { he: body, en: body },
+        small_icon: 'icon-192',
+        chrome_web_icon: 'icon-192.png'
+      })
+    });
+  } catch (error) { console.error('OneSignal broadcast error:', error); }
+}
+
+const Q=id=>document.getElementById(id),AK='adarA11';
+let db={},wS=null,sD=null,tmCurMonth=new Date().getMonth(),tmCurYear=new Date().getFullYear(),tmSelDate=null,tempSlots={},currentTimeTab='morning';
+let wlCurMonth=new Date().getMonth(),wlCurYear=new Date().getFullYear(),wlSelDate=null;
+let selectedClientId=null;
+
+const defaultDB={admin:{user:'adar',pass:'1234',biz:'Adar Sasi Nail',phone:'0501234567',logo:null},svcs:[{id:1,name:'לק ג׳ל רגיל',dur:60,price:120,color:'#FFD700',img:null,on:1},{id:2,name:'בניית ציפורניים',dur:90,price:200,color:'#FF69B4',img:null,on:1},{id:3,name:'מניקור + לק ג׳ל',dur:75,price:150,color:'#DDA0DD',img:null,on:1},{id:4,name:'הסרת לק ג׳ל',dur:30,price:50,color:'#98FB98',img:null,on:1},{id:5,name:'פדיקור + לק ג׳ל',dur:90,price:180,color:'#87CEEB',img:null,on:1}],openSlots:{},bl:[],apts:[],cls:[],gal:[],ntf:[],waitlist:[],nx:{s:6,a:1,c:1,g:1,n:1,w:1}};
+
+function loadFromFirebase(){database.ref('/').on('value',(snapshot)=>{const data=snapshot.val();if(data){db={...defaultDB,...data};if(!db.svcs)db.svcs=defaultDB.svcs;if(!db.apts)db.apts=[];if(!db.cls)db.cls=[];if(!db.gal)db.gal=[];if(!db.ntf)db.ntf=[];if(!db.waitlist)db.waitlist=[];if(!db.openSlots)db.openSlots={};if(!db.bl)db.bl=[];if(!db.nx)db.nx=defaultDB.nx;if(!db.nx.w)db.nx.w=1}else{db={...defaultDB};database.ref('/').set(db)}if(db.apts&&!Array.isArray(db.apts))db.apts=Object.values(db.apts);if(db.cls&&!Array.isArray(db.cls))db.cls=Object.values(db.cls);if(db.gal&&!Array.isArray(db.gal))db.gal=Object.values(db.gal);if(db.ntf&&!Array.isArray(db.ntf))db.ntf=Object.values(db.ntf);if(db.svcs&&!Array.isArray(db.svcs))db.svcs=Object.values(db.svcs);if(db.bl&&!Array.isArray(db.bl))db.bl=Object.values(db.bl);if(db.waitlist&&!Array.isArray(db.waitlist))db.waitlist=Object.values(db.waitlist);cleanExpiredWaitlist();uL();if(Q('app').style.display!=='none')lD()})}
+function sDB(){database.ref('/').set(db)}
+loadFromFirebase();
+
+function cleanExpiredWaitlist(){if(!db.waitlist)return;const now=new Date();const td=now.toISOString().split('T')[0];const currentTime=now.getHours()*60+now.getMinutes();const before=db.waitlist.length;db.waitlist=db.waitlist.filter(w=>{if(w.st==='approved')return true;if(w.st==='cancelled'||w.st==='rejected')return false;if(w.date<td)return false;if(w.date===td){const[h,m]=w.timeTo.split(':').map(Number);const endTime=h*60+m;if(currentTime>endTime)return false}return true});if(db.waitlist.length!==before)sDB()}
+
+function fmtD(date){if(!date)return'';if(typeof date==='string'&&date.includes('-')){const[y,m,d]=date.split('-');return d.padStart(2,'0')+'/'+m.padStart(2,'0')+'/'+y}const dt=new Date(date);return String(dt.getDate()).padStart(2,'0')+'/'+String(dt.getMonth()+1).padStart(2,'0')+'/'+dt.getFullYear()}
+function fmtDFull(date){const dt=new Date(date);const days=['ראשון','שני','שלישי','רביעי','חמישי','שישי','שבת'];const months=['ינואר','פברואר','מרץ','אפריל','מאי','יוני','יולי','אוגוסט','ספטמבר','אוקטובר','נובמבר','דצמבר'];return'יום '+days[dt.getDay()]+', '+dt.getDate()+' '+months[dt.getMonth()]+' '+dt.getFullYear()}
+function parseILDate(d,m,y){if(!d||!m||!y)return null;const day=parseInt(d),mon=parseInt(m),year=parseInt(y);if(isNaN(day)||isNaN(mon)||isNaN(year))return null;if(day<1||day>31||mon<1||mon>12||year<2024)return null;return year+'-'+String(mon).padStart(2,'0')+'-'+String(day).padStart(2,'0')}
+function chTime(id,delta){const el=Q(id);let val=parseInt(el.value)||0;if(id.includes('H')){val+=delta;if(val>23)val=0;if(val<0)val=23}else{val+=delta;if(val>=60)val=0;if(val<0)val=59}el.value=String(val).padStart(2,'0')}
+
+// ========== חיפוש ובחירת לקוחה קיימת ==========
+function searchClients(){const val=Q('iAn').value.trim().toLowerCase();const dropdown=Q('clientDropdown');if(!val||val.length<1){dropdown.classList.remove('show');return}const cls=db.cls||[];const filtered=cls.filter(c=>c.name.toLowerCase().includes(val)||c.phone.includes(val));if(filtered.length>0){dropdown.innerHTML=filtered.slice(0,10).map(c=>'<div class="client-item" onclick="selectClient('+c.id+')"><span class="cl-name">'+c.name+'</span><span class="cl-phone">'+c.phone+'</span></div>').join('');dropdown.classList.add('show')}else{dropdown.innerHTML='<div class="no-clients"><i class="fas fa-user-plus"></i> לקוחה חדשה</div>';dropdown.classList.add('show')}}
+function showClientDropdown(){const cls=db.cls||[];const dropdown=Q('clientDropdown');if(cls.length>0){dropdown.innerHTML='<div style="padding:8px 10px;font-size:9px;color:var(--g500);border-bottom:1px solid var(--g100)"><i class="fas fa-users"></i> לקוחות אחרונות</div>'+cls.slice(-5).reverse().map(c=>'<div class="client-item" onclick="selectClient('+c.id+')"><span class="cl-name">'+c.name+'</span><span class="cl-phone">'+c.phone+'</span></div>').join('');dropdown.classList.add('show')}}
+function selectClient(id){const c=db.cls.find(x=>x.id===id);if(!c)return;selectedClientId=id;Q('clientDropdown').classList.remove('show');Q('clientSelectBox').style.display='none';Q('selectedClientBox').style.display='flex';Q('scName').textContent=c.name;Q('scPhone').textContent=c.phone}
+function clearSelectedClient(){selectedClientId=null;Q('selectedClientBox').style.display='none';Q('clientSelectBox').style.display='block';Q('iAn').value='';Q('iAp').value=''}
+document.addEventListener('click',e=>{if(!e.target.closest('.client-search')&&!e.target.closest('.client-dropdown')){const dd=Q('clientDropdown');if(dd)dd.classList.remove('show')}});
+
+// ========== Time Management ==========
+function setTimeTab(tab){currentTimeTab=tab;document.querySelectorAll('.time-tab').forEach(t=>t.classList.remove('on'));document.querySelector('.time-tab[onclick*="'+tab+'"]').classList.add('on');if(tmSelDate)tmShowSlots(tmSelDate)}
+function tmChMo(dir){const d=new Date(tmCurYear,tmCurMonth,1);d.setMonth(d.getMonth()+dir);tmCurMonth=d.getMonth();tmCurYear=d.getFullYear();tmRenderCal()}
+function tmRenderCal(){const mn=['ינואר','פברואר','מרץ','אפריל','מאי','יוני','יולי','אוגוסט','ספטמבר','אוקטובר','נובמבר','דצמבר'];Q('tmMoL').textContent=mn[tmCurMonth]+' '+tmCurYear;const td=new Date().toISOString().split('T')[0];const fd=new Date(tmCurYear,tmCurMonth,1).getDay();const dim=new Date(tmCurYear,tmCurMonth+1,0).getDate();const hd=['א׳','ב׳','ג׳','ד׳','ה׳','ו׳','ש׳'];let h=hd.map(d=>'<div class="mh">'+d+'</div>').join('');for(let i=0;i<fd;i++)h+='<div class="mc emp"></div>';for(let d=1;d<=dim;d++){const ds=tmCurYear+'-'+String(tmCurMonth+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');const past=ds<td,isT=ds===td,isSel=ds===tmSelDate,isBlocked=db.bl&&db.bl.includes(ds);const hasOpen=db.openSlots&&db.openSlots[ds]&&Object.values(db.openSlots[ds]).some(v=>v===true);let cls='mc';if(past)cls+=' off';else cls+=' av';if(isT)cls+=' td';if(isSel)cls+=' sel';if(isBlocked)cls+=' blk';let style='';if(hasOpen&&!isBlocked&&!past)style='background:rgba(76,175,80,0.1);';h+='<div class="'+cls+'" style="'+style+'" onclick="tmSelDay(\''+ds+'\')">'+d+'</div>'}Q('tmMoCal').innerHTML=h}
+function tmSelDay(ds){if(ds<new Date().toISOString().split('T')[0])return;tmSelDate=ds;tempSlots={};if(db.openSlots&&db.openSlots[ds])tempSlots={...db.openSlots[ds]};tmRenderCal();tmShowSlots(ds)}
+
+function tmShowSlots(date){Q('tmDayTitle').textContent=fmtDFull(date);Q('tmQuickBtns').style.display='flex';Q('timeTabs').style.display='flex';if(db.bl&&db.bl.includes(date)){Q('tmSlotGrid').innerHTML='<div style="grid-column:1/-1;text-align:center;padding:20px;color:var(--dn)"><i class="fas fa-lock" style="font-size:24px;margin-bottom:6px;display:block"></i><p>יום חסום</p><button class="btn btn-xs btn-wh" onclick="ubD(\''+date+'\');tmShowSlots(\''+date+'\')" style="margin-top:8px"><i class="fas fa-unlock"></i> בטל</button></div>';Q('tmQuickBtns').style.display='none';Q('timeTabs').style.display='none';return}const bookedSlots={};const apts=db.apts||[];apts.filter(a=>a.date===date&&a.st!=='cancelled').forEach(a=>{const[h,m]=a.time.split(':').map(Number);const start=h*60+m;for(let i=0;i<a.dur;i+=5){const t=start+i;const time=String(Math.floor(t/60)).padStart(2,'0')+':'+String(t%60).padStart(2,'0');bookedSlots[time]=a}});let startH,endH;if(currentTimeTab==='morning'){startH=7;endH=12}else if(currentTimeTab==='noon'){startH=12;endH=17}else{startH=17;endH=22}let html='';for(let h=startH;h<endH;h++){for(let m=0;m<60;m+=5){const time=String(h).padStart(2,'0')+':'+String(m).padStart(2,'0');const isBooked=bookedSlots[time];const isOpen=tempSlots[time]===true;let cls='slot-item ';let onclick='';if(isBooked){cls+='booked';onclick=' onclick="tmReopenSlot(\''+time+'\')"'}else if(isOpen){cls+='open';onclick=' onclick="tmToggle(\''+time+'\')"'}else{cls+='closed';onclick=' onclick="tmToggle(\''+time+'\')"'}html+='<div class="'+cls+'"'+onclick+'>'+time+'</div>'}}Q('tmSlotGrid').innerHTML=html}
+
+function tmToggle(time){tempSlots[time]=!tempSlots[time];tmShowSlots(tmSelDate)}
+function tmReopenSlot(time){if(confirm('בשעה זו יש כבר תור.\nלפתוח אותה בכל זאת לקביעת תור נוסף?')){tempSlots[time]=true;tmShowSlots(tmSelDate);tt('השעה נפתחה - לא לשכוח לשמור 💾')}}
+function tmOpenRange(){let startH,endH;if(currentTimeTab==='morning'){startH=7;endH=12}else if(currentTimeTab==='noon'){startH=12;endH=17}else{startH=17;endH=22}for(let h=startH;h<endH;h++){for(let m=0;m<60;m+=5){tempSlots[String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')]=true}}tmShowSlots(tmSelDate)}
+function tmCloseAll(){for(let h=7;h<22;h++){for(let m=0;m<60;m+=5){tempSlots[String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')]=false}}tmShowSlots(tmSelDate)}
+function tmSaveDay(){if(!tmSelDate)return;if(!db.openSlots)db.openSlots={};db.openSlots[tmSelDate]={...tempSlots};sDB();tmRenderCal();tt('נשמר ✅')}
+
+// ========== Block Days ==========
+function bD(){const d=Q('bID').value,m=Q('bIM').value,y=Q('bIY').value;const date=parseILDate(d,m,y);if(!date){alert('תאריך לא תקין');return}if(!db.bl)db.bl=[];if(!db.bl.includes(date)){db.bl.push(date);sDB();rBl();tmRenderCal();tt('נחסם')}Q('bID').value='';Q('bIM').value='';Q('bIY').value=''}
+function ubD(dt){if(!db.bl)return;db.bl=db.bl.filter(x=>x!==dt);sDB();rBl();tmRenderCal();tt('בוטל')}
+function rBl(){const bl=db.bl||[];Q('bL').innerHTML=bl.map(d=>'<div class="btg"><span>'+fmtD(d)+'</span><button onclick="ubD(\''+d+'\')"><i class="fas fa-times"></i></button></div>').join('')}
+
+// ========== Calendar ==========
+function iC(){wS=new Date();rW()}
+function mW(d){wS.setDate(wS.getDate()+d*7);rW()}
+function rW(){const s=new Date(wS);s.setDate(s.getDate()-s.getDay());const e=new Date(s);e.setDate(e.getDate()+6);const mn=['ינואר','פברואר','מרץ','אפריל','מאי','יוני','יולי','אוגוסט','ספטמבר','אוקטובר','נובמבר','דצמבר'];Q('wL').textContent=s.getDate()+' - '+e.getDate()+' '+mn[e.getMonth()];const td=new Date().toISOString().split('T')[0];const dn=['א׳','ב׳','ג׳','ד׳','ה׳','ו׳','ש׳'];let h='';for(let i=0;i<7;i++){const d=new Date(s);d.setDate(d.getDate()+i);const ds=d.toISOString().split('T')[0];const isT=ds===td,isSel=ds===sD;h+='<div class="cd'+(isT?' td':'')+(isSel?' on':'')+'" onclick="selCD(\''+ds+'\')"><div class="dn">'+dn[i]+'</div><div class="dd">'+d.getDate()+'</div><div class="dc">'+mn[d.getMonth()].slice(0,3)+'</div></div>'}Q('cD').innerHTML=h;if(!sD)sD=td;rDA()}
+function selCD(d){sD=d;rW()}
+function rDA(){const apts=db.apts||[];const cls=db.cls||[];const da=apts.filter(a=>a.date===sD&&a.st!=='cancelled').sort((a,b)=>a.time.localeCompare(b.time));Q('cA').innerHTML=da.length?da.map(a=>{const c=cls.find(x=>x.id===a.cid);return'<div class="ap '+(a.st==='pending'?'pn':'')+'" onclick="shA('+a.id+')"><div class="ap-t"><div class="t">'+a.time+'</div><div class="d">'+a.dur+'דק׳</div></div><div class="ap-s"></div><div class="ap-i"><div class="n">'+(c?c.name:'?')+'</div><div class="v">'+a.sn+'</div></div><div class="ap-p">'+a.price+'₪</div></div>'}).join(''):'<div class="emp"><i class="fas fa-calendar"></i><p>אין תורים</p></div>'}
+
+// ========== Appointment Details - תיקון: ביטול ועריכה ==========
+function shA(id){const apts=db.apts||[];const cls=db.cls||[];const a=apts.find(x=>x.id===id);if(!a)return;const c=cls.find(x=>x.id===a.cid);Q('dB').innerHTML='<div class="dt"><i class="fas fa-user"></i><span class="dl">לקוחה:</span><span class="dv">'+(c?c.name:'?')+'</span></div><div class="dt"><i class="fas fa-phone"></i><span class="dl">טלפון:</span><span class="dv" style="direction:ltr">'+(c?c.phone:'')+'</span></div><div class="dt"><i class="fas fa-gem"></i><span class="dl">טיפול:</span><span class="dv">'+a.sn+'</span></div><div class="dt"><i class="fas fa-calendar"></i><span class="dl">תאריך:</span><span class="dv">'+fmtD(a.date)+'</span></div><div class="dt"><i class="fas fa-clock"></i><span class="dl">שעה:</span><span class="dv">'+a.time+'</span></div><div class="dt"><i class="fas fa-shekel-sign"></i><span class="dl">מחיר:</span><span class="dv">'+a.price+'₪</span></div><div class="dt"><i class="fas fa-info-circle"></i><span class="dl">סטטוס:</span><span class="bg '+(a.st==='cancelled'?'bg-no':a.st==='pending'?'bg-wt':'bg-ok')+'">'+(a.st==='cancelled'?'בוטל':a.st==='pending'?'ממתין':'מאושר')+'</span></div>';let ft='<button class="btn btn-wh btn-sm" onclick="cM(\'mDt\')">סגירה</button>';if(c){const ph=c.phone.replace(/^0/,'972').replace(/-/g,'');ft+='<a class="btn btn-ok btn-sm" href="https://wa.me/'+ph+'" target="_blank" style="text-decoration:none"><i class="fab fa-whatsapp"></i></a>'}if(a.st==='pending')ft+='<button class="btn btn-ok btn-sm" onclick="cfA('+a.id+');cM(\'mDt\')"><i class="fas fa-check"></i></button>';ft+='<button class="btn btn-wh btn-sm" onclick="oEdM('+a.id+')"><i class="fas fa-edit"></i> עריכה</button>';if(a.st!=='cancelled')ft+='<button class="btn btn-dn btn-sm" onclick="cnA('+a.id+');cM(\'mDt\')"><i class="fas fa-ban"></i> ביטול</button>';Q('dF').innerHTML=ft;oM('mDt')}
+
+function oEdM(id){cM('mDt');const a=db.apts.find(x=>x.id===id);if(!a)return;const c=db.cls.find(x=>x.id===a.cid);Q('edId').value=id;Q('edNm').value=c?c.name:'';const svcs=db.svcs||[];Q('edSv').innerHTML=svcs.map(s=>'<option value="'+s.id+'"'+(s.id===a.sid?' selected':'')+'>'+s.name+'</option>').join('');const[y,m,d]=a.date.split('-');Q('edDtD').value=d;Q('edDtM').value=m;Q('edDtY').value=y;const[th,tm]=a.time.split(':');Q('edTiH').value=th;Q('edTiM').value=tm;Q('edPr').value=a.price;Q('edNt').value=a.notes||'';oM('mEd')}
+
+function svEd(){const id=parseInt(Q('edId').value);const a=db.apts.find(x=>x.id===id);if(!a)return;const sid=parseInt(Q('edSv').value);const sv=db.svcs.find(x=>x.id===sid);const date=parseILDate(Q('edDtD').value,Q('edDtM').value,Q('edDtY').value);const time=Q('edTiH').value.padStart(2,'0')+':'+Q('edTiM').value.padStart(2,'0');if(!date){alert('תאריך לא תקין');return}a.sid=sid;a.sn=sv?sv.name:a.sn;a.date=date;a.time=time;a.dur=sv?sv.dur:a.dur;a.price=parseInt(Q('edPr').value)||a.price;a.notes=Q('edNt').value.trim();const c=db.cls.find(x=>x.id===a.cid);if(c){if(!db.ntf)db.ntf=[];const msg='📝 התור שלך עודכן!\n'+a.sn+'\n'+fmtD(a.date)+' '+a.time+'\n💰 '+a.price+'₪';db.ntf.push({id:db.nx.n++,cid:c.id,msg:msg,time:new Date().toISOString(),read:0});sendPushToClient(c.id,'התור עודכן 📝',a.sn+' - '+fmtD(a.date)+' '+a.time)}sDB();cM('mEd');rDA();lD();tt('עודכן ✅')}
+
+function cfA(id){const a=db.apts.find(x=>x.id===id);if(!a)return;a.st='confirmed';const c=db.cls.find(x=>x.id===a.cid);if(c){if(!db.ntf)db.ntf=[];const msg='✅ התור שלך אושר!\n'+a.sn+'\n'+fmtD(a.date)+' '+a.time+'\n💰 '+a.price+'₪';db.ntf.push({id:db.nx.n++,cid:c.id,msg:msg,time:new Date().toISOString(),read:0});sendPushToClient(c.id,'התור אושר! ✅',a.sn+' - '+fmtD(a.date)+' '+a.time)}sDB();rDA();lD();rPnd();tt('אושר ✅')}
+
+function cnA(id){const a=db.apts.find(x=>x.id===id);if(!a)return;if(!confirm('לבטל את התור?'))return;a.st='cancelled';const c=db.cls.find(x=>x.id===a.cid);if(c){if(!db.ntf)db.ntf=[];const msg='❌ התור שלך בוטל\n'+a.sn+'\n'+fmtD(a.date)+' '+a.time+'\nצרי קשר לקביעה מחדש';db.ntf.push({id:db.nx.n++,cid:c.id,msg:msg,time:new Date().toISOString(),read:0});sendPushToClient(c.id,'התור בוטל ❌',a.sn+' - '+fmtD(a.date)+' '+a.time)}sDB();rDA();lD();tt('בוטל')}
+
+// ========== Services, Gallery, Settings ==========
+function rS(){const svcs=db.svcs||[];Q('sL').innerHTML=svcs.map(s=>'<div class="sv"><div class="sv-c" style="background:'+s.color+'"></div><div class="sv-i"><div class="n">'+s.name+'</div><div class="m">'+s.dur+'דק׳ • '+s.price+'₪</div></div><div class="sv-a"><button class="bi" onclick="oES('+s.id+')"><i class="fas fa-edit"></i></button><button class="bi" onclick="tSv('+s.id+')"><i class="fas fa-'+(s.on?'eye':'eye-slash')+'"></i></button><button class="bi" onclick="dSv('+s.id+')"><i class="fas fa-trash"></i></button></div></div>').join('')}
+function oSM(){Q('mST').textContent='שירות חדש';Q('eSi').value='';Q('iSn').value='';Q('iSd').value='60';Q('iSp').value='100';Q('iSc').value='#C9A96E';Q('sIP').innerHTML='<i class="fas fa-image"></i><span>העלאה</span>';oM('mS')}
+function oES(id){const s=db.svcs.find(x=>x.id===id);if(!s)return;Q('mST').textContent='עריכת שירות';Q('eSi').value=id;Q('iSn').value=s.name;Q('iSd').value=s.dur;Q('iSp').value=s.price;Q('iSc').value=s.color;Q('sIP').innerHTML=s.img?'<img src="'+s.img+'">':'<i class="fas fa-image"></i><span>העלאה</span>';oM('mS')}
+function sSv(){const id=Q('eSi').value?parseInt(Q('eSi').value):null;const nm=Q('iSn').value.trim(),dr=parseInt(Q('iSd').value),pr=parseInt(Q('iSp').value),cl=Q('iSc').value;if(!nm||!dr||!pr){alert('מלאי הכל');return}const im=Q('sIP').querySelector('img');const img=im?im.src:null;if(id){const s=db.svcs.find(x=>x.id===id);if(s){s.name=nm;s.dur=dr;s.price=pr;s.color=cl;if(img)s.img=img}}else{db.svcs.push({id:db.nx.s++,name:nm,dur:dr,price:pr,color:cl,img:img,on:1})}sDB();cM('mS');rS();tt('נשמר')}
+function tSv(id){const s=db.svcs.find(x=>x.id===id);if(s){s.on=s.on?0:1;sDB();rS()}}
+function dSv(id){if(!confirm('לבטל?'))return;db.svcs=db.svcs.filter(x=>x.id!==id);sDB();rS();tt('בוטל')}
+function rG(){const gal=db.gal||[];Q('gG').innerHTML=gal.map(g=>'<div class="gi"><img src="'+g.img+'"><button class="gx" onclick="dGl('+g.id+')"><i class="fas fa-times"></i></button></div>').join('')}
+function oGM(){Q('iGc').value='';Q('gIP').innerHTML='<i class="fas fa-image"></i><span>העלאה</span>';oM('mG')}
+function sGl(){const im=Q('gIP').querySelector('img');if(!im){alert('בחרי תמונה');return}if(!db.gal)db.gal=[];db.gal.push({id:db.nx.g++,img:im.src,cap:Q('iGc').value.trim()});sDB();cM('mG');rG();tt('נוספה')}
+function dGl(id){if(!confirm('לבטל?'))return;db.gal=db.gal.filter(x=>x.id!==id);sDB();rG();tt('בוטלה')}
+function sBz(){db.admin.biz=Q('sN').value.trim();db.admin.phone=Q('sP').value.trim();sDB();tt('נשמר')}
+function sSoc(){db.admin.instagram=Q('sIG').value.trim();db.admin.tiktok=Q('sTT').value.trim();db.admin.facebook=Q('sFB').value.trim();sDB();tt('נשמר')}
+function chP(){const o=Q('oP').value,n=Q('nP').value,n2=Q('nP2').value;if(!o||!n||!n2){alert('מלאי הכל');return}if(o!==db.admin.pass){alert('סיסמה נוכחית שגויה');return}if(n!==n2){alert('סיסמאות לא תואמות');return}if(n.length<4){alert('מינימום 4 תווים');return}db.admin.pass=n;sDB();Q('oP').value='';Q('nP').value='';Q('nP2').value='';tt('סיסמה שונתה')}
+
+// ========== Waitlist ==========
+function wlChMo(dir){const d=new Date(wlCurYear,wlCurMonth,1);d.setMonth(d.getMonth()+dir);wlCurMonth=d.getMonth();wlCurYear=d.getFullYear();wlRenderCal()}
+function wlRenderCal(){const mn=['ינואר','פברואר','מרץ','אפריל','מאי','יוני','יולי','אוגוסט','ספטמבר','אוקטובר','נובמבר','דצמבר'];Q('wlMoL').textContent=mn[wlCurMonth]+' '+wlCurYear;const td=new Date().toISOString().split('T')[0];const fd=new Date(wlCurYear,wlCurMonth,1).getDay();const dim=new Date(wlCurYear,wlCurMonth+1,0).getDate();const hd=['א׳','ב׳','ג׳','ד׳','ה׳','ו׳','ש׳'];const wl=db.waitlist||[];const wlByDate={};wl.filter(w=>w.st==='pending').forEach(w=>{wlByDate[w.date]=(wlByDate[w.date]||0)+1});let h=hd.map(d=>'<div class="mh">'+d+'</div>').join('');for(let i=0;i<fd;i++)h+='<div class="mc emp"></div>';for(let d=1;d<=dim;d++){const ds=wlCurYear+'-'+String(wlCurMonth+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');const past=ds<td,isT=ds===td,isSel=ds===wlSelDate;const cnt=wlByDate[ds]||0;let cls='mc';if(past)cls+=' off';else cls+=' av';if(isT)cls+=' td';if(isSel)cls+=' sel';let style='';if(cnt>0)style='background:rgba(255,152,0,0.15);font-weight:700;';h+='<div class="'+cls+'" style="'+style+'" onclick="wlSelDay(\''+ds+'\')">'+d+(cnt>0?'<span style="position:absolute;top:-2px;right:-2px;background:var(--or);color:#fff;font-size:7px;width:12px;height:12px;border-radius:50%;display:flex;align-items:center;justify-content:center">'+cnt+'</span>':'')+'</div>'}Q('wlMoCal').innerHTML=h;const totalPending=wl.filter(w=>w.st==='pending').length;Q('wlTotalCount').textContent=totalPending+' בקשות ממתינות';Q('wlTotalBadge').textContent=totalPending}
+function wlSelDay(ds){wlSelDate=ds;wlRenderCal();wlShowDayList(ds)}
+function wlShowDayList(ds){const wl=(db.waitlist||[]).filter(w=>w.date===ds&&w.st==='pending');Q('wlDateTitle').textContent=fmtDFull(ds);Q('wlDateCount').textContent=wl.length;Q('wlDateCount').style.display=wl.length?'inline-block':'none';if(wl.length===0){Q('wlDateList').innerHTML='<div class="emp"><i class="fas fa-calendar-check"></i><p>אין בקשות ליום זה</p></div>';return}const cls=db.cls||[];Q('wlDateList').innerHTML=wl.map(w=>{const c=cls.find(x=>x.id===w.cid);return'<div class="wl-card"><div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:8px"><div><div style="font-weight:700;font-size:12px">'+(c?c.name:'?')+'</div><div style="font-size:10px;color:var(--g500);direction:ltr">'+(c?c.phone:'')+'</div></div><span class="wl-badge">ממתין</span></div><div style="background:var(--g50);padding:8px;border-radius:var(--rs);margin-bottom:8px"><div style="font-size:11px;font-weight:600;margin-bottom:2px">'+w.sn+'</div><div style="font-size:10px;color:var(--g600)"><i class="fas fa-clock"></i> '+w.timeFrom+' - '+w.timeTo+'</div>'+(w.notes?'<div style="font-size:9px;color:var(--g500);margin-top:4px">📝 '+w.notes+'</div>':'')+'</div><div style="display:flex;gap:5px"><button class="btn btn-ok btn-sm" onclick="openWLApprove('+w.id+')"><i class="fas fa-check"></i> קבעי תור</button><button class="btn btn-wh btn-sm" onclick="rejectWL('+w.id+')"><i class="fas fa-times"></i></button></div></div>'}).join('')}
+function openWLApprove(id){const w=db.waitlist.find(x=>x.id===id);if(!w)return;const c=db.cls.find(x=>x.id===w.cid);const sv=db.svcs.find(x=>x.id===w.sid);Q('wlApproveId').value=id;Q('wlApproveName').textContent=c?c.name:'?';Q('wlApproveSvc').textContent=w.sn;Q('wlApproveOriginal').textContent=fmtD(w.date)+' '+w.timeFrom+'-'+w.timeTo;const svcs=db.svcs||[];Q('wlApproveSvcSelect').innerHTML=svcs.filter(s=>s.on).map(s=>'<option value="'+s.id+'"'+(s.id===w.sid?' selected':'')+'>'+s.name+' ('+s.dur+'דק׳)</option>').join('');const[y,m,d]=w.date.split('-');Q('wlDtD').value=d;Q('wlDtM').value=m;Q('wlDtY').value=y;const[h]=w.timeFrom.split(':');Q('wlTiH').value=h;Q('wlTiM').value='00';Q('wlPrice').value=sv?sv.price:'';Q('wlApproveNotes').value='';oM('mWL')}
+function confirmWLApprove(){const wlId=parseInt(Q('wlApproveId').value);const w=db.waitlist.find(x=>x.id===wlId);if(!w)return;const sid=parseInt(Q('wlApproveSvcSelect').value);const sv=db.svcs.find(x=>x.id===sid);const date=parseILDate(Q('wlDtD').value,Q('wlDtM').value,Q('wlDtY').value);const time=Q('wlTiH').value.padStart(2,'0')+':'+Q('wlTiM').value.padStart(2,'0');const price=parseInt(Q('wlPrice').value)||sv.price;if(!date){alert('תאריך לא תקין');return}const apt={id:db.nx.a++,cid:w.cid,sid:sid,sn:sv?sv.name:w.sn,date:date,time:time,dur:sv?sv.dur:60,price:price,st:'confirmed',notes:Q('wlApproveNotes').value.trim(),created:new Date().toISOString()};if(!db.apts)db.apts=[];db.apts.push(apt);w.st='approved';w.approvedTime=time;const c=db.cls.find(x=>x.id===w.cid);if(c){if(!db.ntf)db.ntf=[];const msg='🎉 יש לך תור!\n'+apt.sn+'\n'+fmtD(apt.date)+' '+apt.time+'\n💰 '+apt.price+'₪';db.ntf.push({id:db.nx.n++,cid:c.id,msg:msg,time:new Date().toISOString(),read:0});sendPushToClient(c.id,'יש לך תור! 🎉',apt.sn+' - '+fmtD(apt.date)+' '+apt.time)}sDB();cM('mWL');wlRenderCal();if(wlSelDate)wlShowDayList(wlSelDate);lD();tt('התור נקבע! ✅')}
+function rejectWL(id){if(!confirm('לדחות את הבקשה?'))return;const w=db.waitlist.find(x=>x.id===id);if(w){w.st='rejected';const c=db.cls.find(x=>x.id===w.cid);if(c){if(!db.ntf)db.ntf=[];db.ntf.push({id:db.nx.n++,cid:c.id,msg:'😔 הבקשה שלך לרשימת ההמתנה נדחתה.\nנסי לבחור תאריך אחר.',time:new Date().toISOString(),read:0});sendPushToClient(c.id,'הבקשה נדחתה','נסי לבחור תאריך אחר')}}sDB();wlRenderCal();if(wlSelDate)wlShowDayList(wlSelDate);tt('נדחה')}
+
+// ========== Broadcast ==========
+function sBC(){const m=Q('bcM').value.trim();if(!m){alert('כתבי הודעה');return}if(!db.ntf)db.ntf=[];const cls=db.cls||[];cls.forEach(c=>{db.ntf.push({id:db.nx.n++,cid:c.id,msg:'📢 '+m,time:new Date().toISOString(),read:0})});sendPushToAll('הודעה מאדר 📢',m);sDB();Q('bcM').value='';tt('נשלח לכולן!')}
+
+// ========== Dashboard & Init ==========
+function lD(){const td=new Date().toISOString().split('T')[0];const apts=db.apts||[];const cls=db.cls||[];const mo=new Date().getMonth();const yr=new Date().getFullYear();Q('z1').textContent=apts.filter(a=>a.date===td&&a.st!=='cancelled').length;Q('z2').textContent=apts.filter(a=>a.date>=td&&a.st!=='cancelled').length;Q('z3').textContent=apts.filter(a=>{const d=new Date(a.date);return d.getMonth()===mo&&d.getFullYear()===yr&&a.st!=='cancelled'}).reduce((s,a)=>s+a.price,0)+'₪';Q('z4').textContent=cls.length;const da=apts.filter(a=>a.date===td&&a.st!=='cancelled').sort((a,b)=>a.time.localeCompare(b.time));Q('dA').innerHTML=da.length?da.map(a=>{const c=cls.find(x=>x.id===a.cid);return'<div class="ap'+(a.st==='pending'?' pn':'')+'" onclick="shA('+a.id+')"><div class="ap-t"><div class="t">'+a.time+'</div><div class="d">'+a.dur+'דק׳</div></div><div class="ap-s"></div><div class="ap-i"><div class="n">'+(c?c.name:'?')+'</div><div class="v">'+a.sn+'</div></div><div class="ap-p">'+a.price+'₪</div></div>'}).join(''):'<div class="emp"><i class="fas fa-calendar"></i><p>אין תורים היום</p></div>';const days=['ראשון','שני','שלישי','רביעי','חמישי','שישי','שבת'];const months=['ינואר','פברואר','מרץ','אפריל','מאי','יוני','יולי','אוגוסט','ספטמבר','אוקטובר','נובמבר','דצמבר'];const now=new Date();Q('tdy').textContent='יום '+days[now.getDay()]+', '+now.getDate()+' '+months[now.getMonth()]+' '+now.getFullYear();rPnd();rS();rG();rBl()}
+function rPnd(){const apts=db.apts||[];const cls=db.cls||[];const pnd=apts.filter(a=>a.st==='pending');Q('pB').style.display=pnd.length?'block':'none';Q('pD').style.display=pnd.length?'block':'none';Q('pL').innerHTML=pnd.slice(0,5).map(a=>{const c=cls.find(x=>x.id===a.cid);return'<div class="pi"><div class="pi-i"><div class="n">'+(c?c.name:'?')+' - '+a.sn+'</div><div class="d">'+fmtD(a.date)+' '+a.time+'</div></div><div class="pi-b"><button class="btn btn-ok btn-xs" onclick="cfA('+a.id+')"><i class="fas fa-check"></i></button><button class="btn btn-dn btn-xs" onclick="cnA('+a.id+')"><i class="fas fa-times"></i></button></div></div>'}).join('');const wl=(db.waitlist||[]).filter(w=>w.st==='pending');Q('wD').style.display=wl.length?'block':'none'}
+function uL(){const l=db.admin?.logo;['spL','logL','hL'].forEach(id=>{const e=Q(id);if(e)e.innerHTML=l?'<img src="'+l+'">':'<i class="fas fa-gem"></i>'});Q('sN').value=db.admin?.biz||'';Q('sP').value=db.admin?.phone||'';Q('sIG').value=db.admin?.instagram||'';Q('sTT').value=db.admin?.tiktok||'';Q('sFB').value=db.admin?.facebook||'';if(l)localStorage.setItem('adarLogo',l)}
+function hLo(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{db.admin.logo=ev.target.result;Q('lP').innerHTML='<img src="'+ev.target.result+'">';sDB();uL()};r.readAsDataURL(f)}
+function hIm(e,id){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{Q(id).innerHTML='<img src="'+ev.target.result+'">'};r.readAsDataURL(f)}
+
+// ========== Auth ==========
+function ckL(){const s=localStorage.getItem(AK);if(s){try{const d=JSON.parse(s);if(d.u===db.admin?.user&&d.p===db.admin?.pass)return true}catch(e){localStorage.removeItem(AK)}}return false}
+function doLog(){const u=Q('iu').value.trim(),p=Q('ip').value;if(u===db.admin?.user&&p===db.admin?.pass){if(Q('rem').checked)localStorage.setItem(AK,JSON.stringify({u,p}));Q('lo').classList.remove('sh');Q('app').style.display='block';lD();iC();tmRenderCal();wlRenderCal()}else{Q('logE').style.display='block'}}
+function doOut(){localStorage.removeItem(AK);Q('app').style.display='none';Q('lo').classList.add('sh');Q('iu').value='';Q('ip').value=''}
+setTimeout(()=>{Q('sp').classList.add('h');if(ckL()){Q('app').style.display='block';lD();iC();tmRenderCal();wlRenderCal()}else{Q('lo').classList.add('sh')}},2000);
+
+// ========== Navigation ==========
+document.querySelectorAll('.nb').forEach(b=>{b.onclick=()=>{document.querySelectorAll('.nb').forEach(x=>x.classList.remove('on'));b.classList.add('on');goP(b.dataset.p)}});
+function goP(p){const m={d:'pgD',w:'pgW',t:'pgT',c:'pgC',s:'pgS',e:'pgE'};document.querySelectorAll('.pg').forEach(x=>x.classList.remove('on'));Q(m[p]).classList.add('on');if(p==='w')wlRenderCal();if(p==='t')tmRenderCal();if(p==='c')rW()}
+
+// ========== New Appointment ==========
+function oAM(){selectedClientId=null;Q('selectedClientBox').style.display='none';Q('clientSelectBox').style.display='block';Q('iAn').value='';Q('iAp').value='';const svcs=db.svcs||[];Q('iAs').innerHTML=svcs.filter(s=>s.on).map(s=>'<option value="'+s.id+'">'+s.name+' ('+s.dur+'דק׳)</option>').join('');const td=new Date();Q('iAdD').value=String(td.getDate()).padStart(2,'0');Q('iAdM').value=String(td.getMonth()+1).padStart(2,'0');Q('iAdY').value=td.getFullYear();Q('iAtH').value='10';Q('iAtM').value='00';Q('iAnt').value='';oM('mA')}
+function sAp(){let nm,ph,cid;if(selectedClientId){const c=db.cls.find(x=>x.id===selectedClientId);nm=c.name;ph=c.phone;cid=selectedClientId}else{nm=Q('iAn').value.trim();ph=Q('iAp').value.trim();if(!nm||!ph){alert('מלאי שם וטלפון');return}let c=db.cls.find(x=>x.phone===ph);if(!c){c={id:db.nx.c++,name:nm,phone:ph,created:new Date().toISOString()};db.cls.push(c)}cid=c.id}const sid=parseInt(Q('iAs').value);const sv=db.svcs.find(x=>x.id===sid);const date=parseILDate(Q('iAdD').value,Q('iAdM').value,Q('iAdY').value);const time=Q('iAtH').value.padStart(2,'0')+':'+Q('iAtM').value.padStart(2,'0');if(!date){alert('תאריך לא תקין');return}const apt={id:db.nx.a++,cid:cid,sid:sid,sn:sv?sv.name:'',date:date,time:time,dur:sv?sv.dur:60,price:sv?sv.price:0,st:'confirmed',notes:Q('iAnt').value.trim(),created:new Date().toISOString()};if(!db.apts)db.apts=[];db.apts.push(apt);const c=db.cls.find(x=>x.id===cid);if(c){if(!db.ntf)db.ntf=[];const msg='✅ נקבע לך תור!\n'+apt.sn+'\n'+fmtD(apt.date)+' '+apt.time+'\n💰 '+apt.price+'₪';db.ntf.push({id:db.nx.n++,cid:cid,msg:msg,time:new Date().toISOString(),read:0});sendPushToClient(cid,'נקבע לך תור! ✅',apt.sn+' - '+fmtD(apt.date)+' '+apt.time)}sDB();cM('mA');lD();rDA();tt('התור נקבע!')}
+
+// ========== Utils ==========
+function oM(id){Q(id).classList.add('sh')}
+function cM(id){Q(id).classList.remove('sh')}
+function tt(m){const t=Q('toast');Q('tM').textContent=m;t.classList.add('sh');setTimeout(()=>t.classList.remove('sh'),2500)}
+
+// ========== Service Worker Registration ==========
+if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').then(reg=>{console.log('Admin SW registered')}).catch(err=>{console.log('Admin SW error:',err)})}
+</script>
+</body>
+</html>
